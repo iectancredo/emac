@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emac 2024</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #banner img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="row w-100">
+    <!-- Banner para telas menores -->
+    <div class="col-12 d-lg-none mb-4" id="banner">
+      <img src="img/banner.png" alt="Banner">
+    </div>
+    <!-- Banner para telas grandes -->
+    <div class="col-lg-6 d-none d-lg-block" id="banner">
+      <img src="img/banner.png" alt="Banner">
+    </div>
+    <!-- Formulário -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Pré-Inscrição EMAC</h3>
+          <form id="registrationForm">
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Pedro Henrique" required>
+            </div>
+            <div class="form-group">
+              <label for="age">Idade</label>
+              <input id="age" type="number" class="form-control" name="age" placeholder="17" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="meuemail@gmail.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Whatsapp</label>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="(83)99999-9999" required>
+            </div>
+            <div class="form-group">
+              <label for="church">Igreja</label>
+              <input type="text" class="form-control" id="church" name="church" placeholder="Congregacional do Tancredo Neves" required>
+            </div>
+            <div class="form-group">
+              <label for="shepherd">Nome do seu Pastor/Missionário(a)</label>
+              <input type="text" class="form-control" id="shepherd" name="shepherd" placeholder="Francisco Carlos Dantas" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Script JS para enviar dados do formulário -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona o formulário
+    const form = document.getElementById('registrationForm');
+
+    // Adiciona um listener para o evento de submit do formulário
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+
+      // Coleta os dados do formulário
+      const formData = new FormData(form);
+
+      // Cria um objeto para enviar os dados no formato JSON
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      // Configura a requisição para a API
+      fetch('http://192.168.1.9:5000/emac/inscricoes', { // Substitua pelo URL da sua API
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+              .then(response => response.json())
+              .then(data => {
+                // Manipula a resposta da API
+                console.log('Sucesso:', data);
+                alert('Cadastro realizado com sucesso!');
+              })
+              .catch((error) => {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro. Por favor, tente novamente.');
+              });
+    });
+  });
+</script>
+</body>
+</html>
