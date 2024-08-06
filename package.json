@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "firebase": "^10.12.5"
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "firebase": "^10.12.5",
+    "nodemailer": "^6.9.14"
   }
 }
