@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrativo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">Login Administrativo</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="meuemail@exemplo.com" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" class="form-control" id="password" placeholder="Senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+    </form>
+    <div id="error-message" class="mt-3 text-danger"></div>
+</div>
+
+<!-- Firebase App (base) SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yP04",
+        authDomain: "emac-ba92c.firebaseapp.com",
+        projectId: "emac-ba92c",
+        storageBucket: "emac-ba92c.appspot.com",
+        messagingSenderId: "717186027614",
+        appId: "1:717186027614:web:e9ab4b11b38efbc00b24cf"
+    };
+
+    // Inicializa o Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Função de login
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            window.location.href = 'admin.html'; // Redireciona para a página administrativa após login
+        } catch (error) {
+            document.getElementById('error-message').textContent = error.message;
+        }
+    });
+</script>
+</body>
+</html>
