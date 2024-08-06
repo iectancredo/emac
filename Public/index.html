@@ -53,6 +53,22 @@
               <label for="shepherd">Nome do seu Pastor/Missionário(a)</label>
               <input type="text" class="form-control" id="shepherd" name="shepherd" placeholder="Francisco Carlos Dantas" required>
             </div>
+              <div class="form-group">
+                <label>Forma de Pagamento</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
+                  <label class="form-check-label">Pix a vista</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="installments" required>
+                  <label class="form-check-label" for="installments">
+                    Parcelamento
+                  </label>
+                </div>
+                <div class="payment-info" id="installmentsInfo">
+                  <p>O parcelamento é feito em até 12 vezes com juros. O valor total será dividido igualmente em parcelas mensais.</p>
+                </div>
+              </div>
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
           </form>
         </div>
@@ -66,43 +82,48 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!-- Script JS para enviar dados do formulário -->
-<script>
+<!-- Firebase App (base) SDK -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+  import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+
+  // Configuração do Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yP04",
+    authDomain: "emac-ba92c.firebaseapp.com",
+    projectId: "emac-ba92c",
+    storageBucket: "emac-ba92c.appspot.com",
+    messagingSenderId: "717186027614",
+    appId: "1:717186027614:web:e9ab4b11b38efbc00b24cf"
+  };
+
+  // Inicializa o Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Adiciona um listener ao formulário
   document.addEventListener('DOMContentLoaded', function() {
-    // Seleciona o formulário
     const form = document.getElementById('registrationForm');
 
-    // Adiciona um listener para o evento de submit do formulário
-    form.addEventListener('submit', function(event) {
-      event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Previne o envio padrão do formulário
 
       // Coleta os dados do formulário
       const formData = new FormData(form);
-
-      // Cria um objeto para enviar os dados no formato JSON
       const data = {};
       formData.forEach((value, key) => {
         data[key] = value;
       });
 
-      // Configura a requisição para a API
-      fetch('http://192.168.1.9:5000/emac/inscricoes', { // Substitua pelo URL da sua API
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-              .then(response => response.json())
-              .then(data => {
-                // Manipula a resposta da API
-                console.log('Sucesso:', data);
-                alert('Cadastro realizado com sucesso!');
-              })
-              .catch((error) => {
-                console.error('Erro:', error);
-                alert('Ocorreu um erro. Por favor, tente novamente.');
-              });
+      // Adiciona os dados ao Firestore
+      try {
+        await addDoc(collection(db, 'inscricoes'), data);
+        console.log('Sucesso: Dados enviados para o Firestore');
+        alert('Cadastro realizado com sucesso!');
+      } catch (error) {
+        console.error('Erro: ', error);
+        alert('Ocorreu um erro. Por favor, tente novamente.');
+      }
     });
   });
 </script>
