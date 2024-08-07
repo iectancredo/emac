@@ -7,12 +7,6 @@
   <title>Emac 2024</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Estilo do banner */
-    #banner img {
-      width: 40%; /* A imagem ocupa toda a largura do container */
-      height: 40%;
-    }
-
     /* Estilo do acesso administrativo */
     #adm {
       position: absolute;
@@ -34,20 +28,9 @@
       height: 50px;
     }
 
-    /* Seção do formulário e banner */
-    .form-section {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
+    .container-fluid{
+      padding: 20px;
     }
-    .form-container {
-      display: flex;
-      flex-direction: column;
-    }
-    .banner-container {
-      display: none;
-    }
-
     /* Estilo para telas grandes */
     @media (min-width: 992px) {
       .form-section {
@@ -65,10 +48,9 @@
         flex: 1;
         padding: 20px; /* Adiciona espaçamento ao redor do banner */
       }
-      #banner img {
-        max-width: 100%;
-        height: auto; /* Mantém a proporção da imagem */
-        object-fit: cover; /* Ajusta a imagem para preencher o container sem distorcer */
+      .banner-container img {
+        width: 100%; /* Ajusta a largura da imagem para 100% do contêiner */
+        height: auto;
       }
     }
 
@@ -78,23 +60,26 @@
         display: block;
         margin-bottom: 20px;
       }
-      .form-container {
-        flex: 1;
-        padding: 10%;
-      }
-      #banner img {
-        width: 100%; /* Ajuste a largura para telas pequenas */
+
+      .banner-container img {
+        width: 100%; /* Ajusta a largura para telas pequenas */
         height: auto; /* Mantém a proporção da imagem */
       }
     }
 
     /* Estilo para o QR Code e código Pix */
     #pixInfo {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
       display: none;
       margin-top: 20px;
+      margin-bottom: 20px;
     }
     #pixInfo img {
-      max-width: 100%;
+
+
+      max-width: 50%;
       height: auto;
     }
     #pixCode {
@@ -105,71 +90,76 @@
 </head>
 <body>
 
-<div id="adm">
-  <a href="login.html">Acesso administrativo</a>
-</div>
-
-<div class="container form-section">
-
-  <div class="form-container">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title text-center mb-4">Pré-Inscrição EMAC</h3>
-        <form id="registrationForm">
-          <div class="form-group">
-            <label for="name">Nome</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Pedro Henrique" required>
-          </div>
-          <div class="form-group">
-            <label for="age">Idade</label>
-            <input id="age" type="number" class="form-control" name="age" placeholder="17" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="meuemail@gmail.com" required>
-          </div>
-          <div class="form-group">
-            <label for="phone">Whatsapp</label>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="(83)99999-9999" required>
-          </div>
-          <div class="form-group">
-            <label for="church">Igreja</label>
-            <input type="text" class="form-control" id="church" name="church" placeholder="Congregacional do Tancredo Neves" required>
-          </div>
-          <div class="form-group">
-            <label for="shepherd">Nome do seu Pastor/Missionário(a)</label>
-            <input type="text" class="form-control" id="shepherd" name="shepherd" placeholder="Francisco Carlos Dantas" required>
-          </div>
-          <div class="form-group">
-            <label>Forma de Pagamento</label>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
-              <label class="form-check-label">Pix à vista</label>
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-sm-12 banner-container">
+      <img id="banner" src="img/teste.png" alt="Banner">
+    </div>
+    <div class="col-sm-12 col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Inscrição EMAC 2024</h3>
+          <form id="registrationForm">
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Pedro Henrique" required>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="installments" required>
-              <label class="form-check-label" for="installments">
-                Parcelamento
-              </label>
+            <div class="form-group">
+              <label for="age">Idade</label>
+              <input id="age" type="number" class="form-control" name="age" placeholder="17" required>
             </div>
-            <div class="payment-info" id="installmentsInfo">
-              <p>O parcelamento é feito em 2 vezes no pix. O valor total será dividido igualmente em parcelas mensais.</p>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="meuemail@gmail.com" required>
             </div>
+            <div class="form-group">
+              <label for="phone">Whatsapp</label>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="(83)99999-9999" required>
+            </div>
+            <div class="form-group">
+              <label for="church">Igreja</label>
+              <input type="text" class="form-control" id="church" name="church" placeholder="Congregacional do Tancredo Neves" required>
+            </div>
+            <div class="form-group">
+              <label for="shepherd">Nome do seu Pastor/Missionário(a)</label>
+              <input type="text" class="form-control" id="shepherd" name="shepherd" placeholder="Francisco Carlos Dantas" required>
+            </div>
+            <div class="form-group">
+              <label>Forma de Pagamento</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="money" value="dinheiro" required>
+                <label class="form-check-label" for="installments">Dinheiro</label>
+              </div>
+              <div class="payment-info" id="moneyInfo" style="display: none">
+                <p>Em caso de pagamento na chegada ao evento, devido as custos, terá uma taxa com acrescimo de R$ 10,00 ficando o valor total R$ 120,00</p>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
+                <label class="form-check-label">Pix à vista</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
+                <label class="form-check-label" for="installments">Parcelamento</label>
+              </div>
+              <div class="payment-info" id="installmentsInfo" style="display: none">
+                <p>O parcelamento é feito em 2 vezes no pix. O valor total será dividido igualmente em parcelas mensais, que deverão sera pagas respectivamente nos dias 10 de Setembro e 10 de Outubro. ENVIE O COMPROVANTE PELO WHASTAPP COM SEU NOME COMPLETO</p>
+              </div>
+            </div>
+            <div id="pixInfo">
+              <img id="pixQrCode" src="img/qrcode.jpeg" alt="QR Code Pix">
+              <p>Copie o código Pix:</p>
+              <code id="pixCode" onclick="copyPixCode()">00020126590014br.gov.bcb.pix0122umectancredo@gmail.com0211EMAC - 20245204000053039865406110.005802BR5920Marilia Silva Dantas6008Brasilia6209050558l1m63047752</code>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+          </form>
+          <div>
+            <!-- Botão flutuante de WhatsApp -->
+            <a href="https://wa.me/5583999701258" class="frame-link">
+              <div class="floating-button">
+                <img id="img" src="img/Whasticon.png" alt="icon">
+              </div>
+            </a>
           </div>
-          <div id="pixInfo">
-            <img id="pixQrCode" src="img/qrcode.jpeg" alt="QR Code Pix">
-            <p>Copie o código Pix:</p>
-            <code id="pixCode" onclick="copyPixCode()">00020126590014br.gov.bcb.pix0122umectancredo@gmail.com0211EMAC - 20245204000053039865406110.005802BR5920Marilia Silva Dantas6008Brasilia6209050558l1m63047752</code>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Enviar</button>
-        </form>
-        <div>
-          <!-- Botão flutuante de WhatsApp -->
-          <a href="https://wa.me/5583999701258" class="frame-link">
-            <div class="floating-button">
-              <img id="img" src="img/Whasticon.png" alt="icon">
-            </div>
-          </a>
         </div>
       </div>
     </div>
@@ -206,6 +196,9 @@
     const pixRadio = document.getElementById('pix');
     const installmentsRadio = document.getElementById('installments');
     const pixInfo = document.getElementById('pixInfo');
+    const moneyInfo = document.getElementById('moneyInfo')
+    const parcelamentoInfo = document.getElementById('installmentsInfo')
+    const MoneyRadio = document.getElementById('money')
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault(); // Previne o envio padrão do formulário
@@ -225,50 +218,55 @@
       data.presence = null;
       data.paymentStatus = null;
 
-      // Verifica se o email já está cadastrado
+      // Verifica se o email já está registrado
       const email = data.email;
-      const inscritosRef = collection(db, 'inscricoes');
-      const q = query(inscritosRef, where('email', '==', email));
-
+      const q = query(collection(db, "inscricoes"), where("email", "==", email));
       const querySnapshot = await getDocs(q);
 
-      if (!querySnapshot.empty) {
-        // Email já cadastrado
-        alert('O email já está cadastrado. Por favor, utilize outro email.');
-        return;
-      }
-
-      // Adiciona os dados ao Firestore
-      try {
-        await addDoc(inscritosRef, data);
-        console.log('Sucesso: Dados enviados para o Firestore');
-        form.reset(); // Limpa o formulário após o sucesso
-        alert('Cadastro realizado com sucesso!');
-
-      } catch (error) {
-        console.error('Erro: ', error);
-        alert('Ocorreu um erro. Por favor, tente novamente.');
+      if (querySnapshot.empty) {
+        // Se o email não está registrado, adiciona um novo documento no Firestore
+        await addDoc(collection(db, "inscricoes"), data);
+        alert('Inscrição enviada com sucesso!');
+        form.reset(); // Reseta o formulário após o envio
+      } else {
+        // Se o email já está registrado, exibe uma mensagem de erro
+        alert('Este email já foi registrado.');
       }
     });
 
-    // Adiciona listeners aos métodos de pagamento
-    pixRadio.addEventListener('change', () => {
-      pixInfo.style.display = pixRadio.checked ? 'block' : 'none';
+
+    pixRadio.addEventListener('change', function() {
+      if (pixRadio.checked) {
+        pixInfo.style.display = 'block';
+        parcelamentoInfo.style.display = 'none';
+        moneyInfo.style.display = 'none';
+      }
+
     });
-    installmentsRadio.addEventListener('change', () => {
-      pixInfo.style.display = 'none';
+    MoneyRadio.addEventListener('change', function (){
+      if (MoneyRadio.checked) {
+        moneyInfo.style.display = 'block';
+        pixInfo.style.display = 'none';
+      }
+    })
+
+    installmentsRadio.addEventListener('change', function() {
+      if (installmentsRadio.checked) {
+        parcelamentoInfo.style.display = 'block';
+        pixInfo.style.display = 'none';
+        moneyInfo.style.display = 'none';
+      }
     });
   });
 
-  // Função para copiar o código Pix para o clipboard
   function copyPixCode() {
     const pixCode = document.getElementById('pixCode');
-    const range = document.createRange();
-    range.selectNode(pixCode);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
+    const textArea = document.createElement('textarea');
+    textArea.value = pixCode.textContent;
+    document.body.appendChild(textArea);
+    textArea.select();
     document.execCommand('copy');
-    window.getSelection().removeAllRanges();
+    document.body.removeChild(textArea);
     alert('Código Pix copiado para a área de transferência!');
   }
 </script>
