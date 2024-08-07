@@ -8,85 +8,131 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     #banner img {
-      max-width: 100%;
+      width: 100%;
       height: auto;
+    }
+
+    #adm {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+    }
+    #adm a {
+      color: #007bff;
+      font-weight: bold;
+    }
+    #adm a:hover {
+      text-decoration: underline;
+    }
+    .floating-button {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 1000;
+    }
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .form-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .banner-container {
+      display: none;
+    }
+    @media (min-width: 992px) {
+      .form-section {
+        flex-direction: row;
+      }
+      .form-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .banner-container {
+        display: block;
+        flex: 1;
+      }
+    }
+    @media (max-width: 991px) {
+      .banner-container {
+        display: block;
+        margin-bottom: 20px;
+      }
+      .form-container {
+        flex: 1;
+      }
     }
   </style>
 </head>
 <body>
-<a href="login.html">Acesso administrativo</a>
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-  <div class="row w-100">
-    <!-- Banner para telas menores -->
-    <div class="col-12 d-lg-none mb-4" id="banner">
-      <img src="img/banner.png" alt="Banner">
-    </div>
-    <!-- Banner para telas grandes -->
-    <div class="col-lg-6 d-none d-lg-block" id="banner">
-      <img src="img/banner.png" alt="Banner">
-    </div>
-    <!-- Formulário -->
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title text-center mb-4">Pré-Inscrição EMAC</h3>
-          <form id="registrationForm">
-            <div class="form-group">
-              <label for="name">Nome</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Pedro Henrique" required>
-            </div>
-            <div class="form-group">
-              <label for="age">Idade</label>
-              <input id="age" type="number" class="form-control" name="age" placeholder="17" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="meuemail@gmail.com" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Whatsapp</label>
-              <input type="tel" class="form-control" id="phone" name="phone" placeholder="(83)99999-9999" required>
-            </div>
-            <div class="form-group">
-              <label for="church">Igreja</label>
-              <input type="text" class="form-control" id="church" name="church" placeholder="Congregacional do Tancredo Neves" required>
-            </div>
-            <div class="form-group">
-              <label for="shepherd">Nome do seu Pastor/Missionário(a)</label>
-              <input type="text" class="form-control" id="shepherd" name="shepherd" placeholder="Francisco Carlos Dantas" required>
-            </div>
-            <div class="form-group">
-              <label>Forma de Pagamento</label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
-                <label class="form-check-label">Pix a vista</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="installments" required>
-                <label class="form-check-label" for="installments">
-                  Parcelamento
-                </label>
-              </div>
-              <div class="payment-info" id="installmentsInfo">
-                <p>O parcelamento é feito em até 12 vezes com juros. O valor total será dividido igualmente em parcelas mensais.</p>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
-          </form>
-          <div>
-            <a href="oficinas.html">
-              <button>Mais Informações</button>
-            </a>
+
+<div id="adm">
+  <a href="login.html">Acesso administrativo</a>
+</div>
+
+<div class="container form-section">
+  <div class="banner-container d-none d-lg-block">
+    <img src="img/banner.png" alt="Banner">
+  </div>
+  <div class="form-container">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Pré-Inscrição EMAC</h3>
+        <form id="registrationForm">
+          <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Pedro Henrique" required>
           </div>
-          <div>
-            <a href="https://wa.me/5583999701258" class="frame-link">
-              <div>
-                <div class="floating-button">
-                  <img id="img" src="img/Whasticon.png" alt="icon">
-                </div>
-              </div>
-            </a>
+          <div class="form-group">
+            <label for="age">Idade</label>
+            <input id="age" type="number" class="form-control" name="age" placeholder="17" required>
           </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="meuemail@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Whatsapp</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="(83)99999-9999" required>
+          </div>
+          <div class="form-group">
+            <label for="church">Igreja</label>
+            <input type="text" class="form-control" id="church" name="church" placeholder="Congregacional do Tancredo Neves" required>
+          </div>
+          <div class="form-group">
+            <label for="shepherd">Nome do seu Pastor/Missionário(a)</label>
+            <input type="text" class="form-control" id="shepherd" name="shepherd" placeholder="Francisco Carlos Dantas" required>
+          </div>
+          <div class="form-group">
+            <label>Forma de Pagamento</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
+              <label class="form-check-label">Pix a vista</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="installments" required>
+              <label class="form-check-label" for="installments">
+                Parcelamento
+              </label>
+            </div>
+            <div class="payment-info" id="installmentsInfo">
+              <p>O parcelamento é feito em 2 vezes no pix. O valor total será dividido igualmente em parcelas mensais.</p>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+        </form>
+        <div>
+          <!-- Botão flutuante de WhatsApp -->
+          <a href="https://wa.me/5583999701258" class="frame-link">
+            <div class="floating-button">
+              <img id="img" src="img/Whasticon.png" alt="icon">
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -128,7 +174,11 @@
       const formData = new FormData(form);
       const data = {};
       formData.forEach((value, key) => {
-        data[key] = value;
+        if (key === 'name') {
+          data[key] = value.toUpperCase();
+        } else {
+          data[key] = value;
+        }
       });
 
       // Verifica se o email já está cadastrado

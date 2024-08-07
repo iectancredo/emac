@@ -5,6 +5,34 @@
     <title>Administrativo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        table {
+            margin-top: 20px;
+        }
+        .btn-danger {
+            margin: 0;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .text-center {
+            margin-bottom: 20px;
+        }
+        #total_inscritos {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -21,6 +49,7 @@
             <th>Igreja</th>
             <th>Pastor Responsável</th>
             <th>Oficina</th>
+            <th>Ações</th>
         </tr>
         </thead>
         <tbody id="lista-inscritos">
@@ -34,7 +63,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
     import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
-    import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -61,7 +90,8 @@
     });
 
     async function carregarLista() {
-        const input = document.getElementById('search-input').value.toLowerCase();
+        const input = document.getElementById('search-input').value.toUpperCase(); // Converte a entrada para caixa alta
+        console.log('Pesquisa:', input); // Adicione este log para verificar o valor de input
         let inscritosRef = collection(db, 'inscricoes');
 
         if (input) {
@@ -69,6 +99,10 @@
         }
 
         const inscritosSnapshot = await getDocs(inscritosRef);
+        console.log('Snapshot:', inscritosSnapshot.docs);
+
+        // Adicione este log para verificar o resultado da consulta
+
         const listaInscritos = document.getElementById('lista-inscritos');
         const total = document.getElementById('total_inscritos');
 
@@ -77,14 +111,26 @@
 
         inscritosSnapshot.forEach((doc) => {
             const inscrito = doc.data();
-            if (inscrito.name && inscrito.name.toLowerCase().includes(input)) {
+            console.log('Inscrito:', inscrito); // Adicione este log para verificar os dados do inscrito
+            if (inscrito.name && inscrito.name.includes(input)) { // A comparação é feita agora com a entrada já em caixa alta
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td><td>${inscrito.age || 'N/A'}</td><td>${inscrito.church || 'N/A'}</td><td>${inscrito.shepherd || 'N/A'}</td><td>${inscrito.oficina || 'N/A'}</td>`;
+                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td><td>${inscrito.age || 'N/A'}</td><td>${inscrito.church || 'N/A'}</td><td>${inscrito.shepherd || 'N/A'}</td><td>${inscrito.oficina || 'N/A'}</td><td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
                 listaInscritos.appendChild(row);
                 count++;
             }
         });
         total.textContent = count;
+    }
+
+    window.removerins = async function(id){
+        if(confirm('Tem certeza que deseja remover este inscrito?')){
+            try {
+                await deleteDoc(doc(db, 'inscricoes', id));
+                carregarLista();
+            } catch (error) {
+                console.error('Erro ao remover o inscrito:', error);
+            }
+        }
     }
 </script>
 </body>
