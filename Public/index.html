@@ -137,12 +137,15 @@
                 <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
                 <label class="form-check-label">Pix à vista</label>
               </div>
+              <div class="payment-info" id="AvistaInfo" style="display: none">
+                <p>ENVIE O COMPROVANTE PELO WHASTAPP COM SEU NOME COMPLETO DE ACORDO COM O SEU CADASTRO</p>
+              </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
                 <label class="form-check-label" for="installments">Parcelamento</label>
               </div>
               <div class="payment-info" id="installmentsInfo" style="display: none">
-                <p>O parcelamento é feito em 2 vezes no pix. O valor total será dividido igualmente em parcelas mensais, que deverão sera pagas respectivamente nos dias 10 de Setembro e 10 de Outubro. ENVIE O COMPROVANTE PELO WHASTAPP COM SEU NOME COMPLETO</p>
+                <p>O parcelamento é feito em 2 vezes no Pix. O valor total será dividido igualmente em parcelas mensais, que deverão ser pagas, respectivamente, nos dias 10 de setembro e 10 de outubro. Envie o comprovante pelo WhatsApp com seu nome completo.</p>
               </div>
             </div>
             <div id="pixInfo">
@@ -199,6 +202,7 @@
     const moneyInfo = document.getElementById('moneyInfo')
     const parcelamentoInfo = document.getElementById('installmentsInfo')
     const MoneyRadio = document.getElementById('money')
+    const avistainfo = document.getElementById('AvistaInfo')
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault(); // Previne o envio padrão do formulário
@@ -240,13 +244,16 @@
         pixInfo.style.display = 'block';
         parcelamentoInfo.style.display = 'none';
         moneyInfo.style.display = 'none';
+        avistainfo.style.display = 'block'
       }
 
     });
+
     MoneyRadio.addEventListener('change', function (){
       if (MoneyRadio.checked) {
         moneyInfo.style.display = 'block';
         pixInfo.style.display = 'none';
+        avistainfo.style.display = 'none'
       }
     })
 
@@ -255,6 +262,7 @@
         parcelamentoInfo.style.display = 'block';
         pixInfo.style.display = 'none';
         moneyInfo.style.display = 'none';
+        avistainfo.style.display = 'none'
       }
     });
   });
