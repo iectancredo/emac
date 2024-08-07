@@ -7,11 +7,13 @@
   <title>Emac 2024</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    /* Estilo do banner */
     #banner img {
-      width: 100%;
-      height: auto;
+      width: 40%; /* A imagem ocupa toda a largura do container */
+      height: 40%;
     }
 
+    /* Estilo do acesso administrativo */
     #adm {
       position: absolute;
       top: 15px;
@@ -25,12 +27,14 @@
     #adm a:hover {
       text-decoration: underline;
     }
-    .floating-button {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      z-index: 1000;
+
+    /* Estilo do botão flutuante */
+    .floating-button img {
+      width: 50px; /* Ajuste o tamanho do ícone do botão flutuante */
+      height: 50px;
     }
+
+    /* Seção do formulário e banner */
     .form-section {
       display: flex;
       flex-direction: column;
@@ -43,6 +47,8 @@
     .banner-container {
       display: none;
     }
+
+    /* Estilo para telas grandes */
     @media (min-width: 992px) {
       .form-section {
         flex-direction: row;
@@ -52,12 +58,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 20px; /* Adiciona espaçamento ao redor do formulário */
       }
       .banner-container {
         display: block;
         flex: 1;
+        padding: 20px; /* Adiciona espaçamento ao redor do banner */
+      }
+      #banner img {
+        max-width: 100%;
+        height: auto; /* Mantém a proporção da imagem */
+        object-fit: cover; /* Ajusta a imagem para preencher o container sem distorcer */
       }
     }
+
+    /* Estilo para telas pequenas */
     @media (max-width: 991px) {
       .banner-container {
         display: block;
@@ -65,7 +80,26 @@
       }
       .form-container {
         flex: 1;
+        padding: 10%;
       }
+      #banner img {
+        width: 100%; /* Ajuste a largura para telas pequenas */
+        height: auto; /* Mantém a proporção da imagem */
+      }
+    }
+
+    /* Estilo para o QR Code e código Pix */
+    #pixInfo {
+      display: none;
+      margin-top: 20px;
+    }
+    #pixInfo img {
+      max-width: 100%;
+      height: auto;
+    }
+    #pixCode {
+      cursor: pointer;
+      color: #007bff;
     }
   </style>
 </head>
@@ -76,9 +110,7 @@
 </div>
 
 <div class="container form-section">
-  <div class="banner-container d-none d-lg-block">
-    <img src="img/banner.png" alt="Banner">
-  </div>
+
   <div class="form-container">
     <div class="card">
       <div class="card-body">
@@ -112,7 +144,7 @@
             <label>Forma de Pagamento</label>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
-              <label class="form-check-label">Pix a vista</label>
+              <label class="form-check-label">Pix à vista</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="installments" required>
@@ -123,6 +155,11 @@
             <div class="payment-info" id="installmentsInfo">
               <p>O parcelamento é feito em 2 vezes no pix. O valor total será dividido igualmente em parcelas mensais.</p>
             </div>
+          </div>
+          <div id="pixInfo">
+            <img id="pixQrCode" src="img/qrcode.jpeg" alt="QR Code Pix">
+            <p>Copie o código Pix:</p>
+            <code id="pixCode" onclick="copyPixCode()">00020126590014br.gov.bcb.pix0122umectancredo@gmail.com0211EMAC - 20245204000053039865406110.005802BR5920Marilia Silva Dantas6008Brasilia6209050558l1m63047752</code>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Enviar</button>
         </form>
@@ -166,6 +203,9 @@
   // Adiciona um listener ao formulário
   document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registrationForm');
+    const pixRadio = document.getElementById('pix');
+    const installmentsRadio = document.getElementById('installments');
+    const pixInfo = document.getElementById('pixInfo');
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault(); // Previne o envio padrão do formulário
@@ -205,7 +245,27 @@
         alert('Ocorreu um erro. Por favor, tente novamente.');
       }
     });
+
+    // Adiciona listeners aos métodos de pagamento
+    pixRadio.addEventListener('change', () => {
+      pixInfo.style.display = pixRadio.checked ? 'block' : 'none';
+    });
+    installmentsRadio.addEventListener('change', () => {
+      pixInfo.style.display = 'none';
+    });
   });
+
+  // Função para copiar o código Pix para o clipboard
+  function copyPixCode() {
+    const pixCode = document.getElementById('pixCode');
+    const range = document.createRange();
+    range.selectNode(pixCode);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    alert('Código Pix copiado para a área de transferência!');
+  }
 </script>
 </body>
 </html>
