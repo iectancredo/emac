@@ -48,6 +48,8 @@
             <th>Idade</th>
             <th>Igreja</th>
             <th>Pastor Responsável</th>
+            <th>Telefone</th>
+            <th>Metodo de Pagamento</th>
             <th>Oficina</th>
             <th>Ações</th>
         </tr>
@@ -114,7 +116,7 @@
             console.log('Inscrito:', inscrito); // Adicione este log para verificar os dados do inscrito
             if (inscrito.name && inscrito.name.includes(input)) { // A comparação é feita agora com a entrada já em caixa alta
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td><td>${inscrito.age || 'N/A'}</td><td>${inscrito.church || 'N/A'}</td><td>${inscrito.shepherd || 'N/A'}</td><td>${inscrito.oficina || 'N/A'}</td><td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
+                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td><td>${inscrito.age || 'N/A'}</td><td>${inscrito.church || 'N/A'}</td><td>${inscrito.shepherd || 'N/A'}</td><td>${inscrito.oficina || 'N/A'}</td><td>${inscrito.phone || 'N/A'}</td><td>${inscrito.paymentMethod || 'N/A'}</td><td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
                 listaInscritos.appendChild(row);
                 count++;
             }
