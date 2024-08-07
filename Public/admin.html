@@ -41,6 +41,8 @@
         <input type="text" id="search-input" class="form-control" placeholder="Pesquise por um inscrito">
     </div>
     <p>Total de Inscritos: <span id="total_inscritos">0</span></p>
+    <p>Total de Presentes: <span id="total_presentes">0</span></p>
+    <p>Total de Pagamentos: <span id="total_pagamentos">0</span></p>
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -51,6 +53,8 @@
             <th>Telefone</th>
             <th>Metodo de Pagamento</th>
             <th>Oficina</th>
+            <th>Presença</th>
+            <th>Pagamento</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -65,7 +69,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
     import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
-    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc, updateDoc} from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -107,21 +111,43 @@
 
         const listaInscritos = document.getElementById('lista-inscritos');
         const total = document.getElementById('total_inscritos');
+        const totalPresentes = document.getElementById('total_presentes');
+        const totalPagamentos = document.getElementById('total_pagamentos');
 
         listaInscritos.innerHTML = '';
         let count = 0;
+        let countPresentes = 0;
+        let countPagamentos = 0;
 
         inscritosSnapshot.forEach((doc) => {
             const inscrito = doc.data();
             console.log('Inscrito:', inscrito); // Adicione este log para verificar os dados do inscrito
             if (inscrito.name && inscrito.name.includes(input)) { // A comparação é feita agora com a entrada já em caixa alta
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td><td>${inscrito.age || 'N/A'}</td><td>${inscrito.church || 'N/A'}</td><td>${inscrito.shepherd || 'N/A'}</td><td>${inscrito.oficina || 'N/A'}</td><td>${inscrito.phone || 'N/A'}</td><td>${inscrito.paymentMethod || 'N/A'}</td><td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
+                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td>
+                <td>${inscrito.age || 'N/A'}</td>
+                <td>${inscrito.church || 'N/A'}</td>
+                <td>${inscrito.shepherd || 'N/A'}</td>
+                <td>${inscrito.phone || 'N/A'}</td>
+                <td>${inscrito.paymentMethod || 'N/A'}</td>
+                <td>${inscrito.oficina || 'N/A'}</td>
+                <td><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
+                <td><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
+                <td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
                 listaInscritos.appendChild(row);
                 count++;
+
+                if(inscrito.presence){
+                    countPresentes++
+                }
+                if(inscrito.paymentStatus){
+                    countPagamentos++
+                }
             }
         });
         total.textContent = count;
+        totalPresentes.textContent = countPresentes;
+        totalPagamentos.textContent = countPagamentos;
     }
 
     window.removerins = async function(id){
@@ -132,6 +158,28 @@
             } catch (error) {
                 console.error('Erro ao remover o inscrito:', error);
             }
+        }
+    }
+
+    window.updatePresence = async function (id,isChecked ){
+        try{
+            await updateDoc(doc(db,'inscricoes',id),{
+                presence: isChecked
+            });
+        } catch (e) {
+            console.error('Erro ao atualizar a presença:', error);
+            
+        }
+    }
+
+    window.updatePayment = async function (id,isChecked ){
+        try{
+            await updateDoc(doc(db,'inscricoes',id),{
+                paymentStatus: isChecked
+            });
+        } catch (e) {
+            console.error('Erro ao atualizar o pagamento:', error);
+
         }
     }
 </script>

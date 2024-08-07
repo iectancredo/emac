@@ -221,6 +221,10 @@
         }
       });
 
+      // Adiciona os campos de presença e status de pagamento com valores padrão
+      data.presence = null;
+      data.paymentStatus = null;
+
       // Verifica se o email já está cadastrado
       const email = data.email;
       const inscritosRef = collection(db, 'inscricoes');
@@ -238,8 +242,9 @@
       try {
         await addDoc(inscritosRef, data);
         console.log('Sucesso: Dados enviados para o Firestore');
-        alert('Cadastro realizado com sucesso!');
         form.reset(); // Limpa o formulário após o sucesso
+        alert('Cadastro realizado com sucesso!');
+
       } catch (error) {
         console.error('Erro: ', error);
         alert('Ocorreu um erro. Por favor, tente novamente.');
