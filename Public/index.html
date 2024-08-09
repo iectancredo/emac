@@ -32,10 +32,6 @@
     }
     body{
       background-color: #3A0D56;
-    }
-    .card{
-      border-radius: 20px;
-      background-color: #E9ECEF;
       font-family: 'Poppins';
     }
 
@@ -97,6 +93,10 @@
     #pixCode {
       cursor: pointer;
       color: #007bff;
+    }
+    .card{
+      border-radius: 20px;
+      background-color: #CCCCCC;
     }
     {
     #registrationForm{
@@ -170,7 +170,7 @@
               <p>Copie o código Pix:</p>
               <code id="pixCode" onclick="copyPixCode()">00020126590014br.gov.bcb.pix0122umectancredo@gmail.com0211EMAC - 20245204000053039865406110.005802BR5920Marilia Silva Dantas6008Brasilia6209050558l1m63047752</code>
             </div>
-            <button type="submit" class="btn btn-primary btn-block" style="background-color: #f5d563; color: #3A0D56">Enviar</button>
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
           </form>
           <div>
             <!-- Botão flutuante de WhatsApp -->
@@ -198,23 +198,38 @@
 
   // Configuração do Firebase
   const firebaseConfig = {
-    apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yXX",
-    authDomain: "emac2024.firebaseapp.com",
-    projectId: "emac2024",
-    storageBucket: "emac2024.appspot.com",
-    messagingSenderId: "1234567890",
-    appId: "1:1234567890:web:abc123def456"
+    apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yP04",
+    authDomain: "emac-ba92c.firebaseapp.com",
+    projectId: "emac-ba92c",
+    storageBucket: "emac-ba92c.appspot.com",
+    messagingSenderId: "717186027614",
+    appId: "1:717186027614:web:e9ab4b11b38efbc00b24c1",
+    measurementId: "G-LKLT0X9NFD"
   };
 
-  // Inicializa o Firebase
+  // Inicialização do Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Função para manipular a submissão do formulário
-  document.getElementById('registrationForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
+  // Formatação do telefone conforme o usuário digita
+  const phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', function(e) {
+    let phone = e.target.value.replace(/\D/g, '');
+    if (phone.length > 10) {
+      phone = phone.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+    } else if (phone.length > 5) {
+      phone = phone.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+    } else if (phone.length > 2) {
+      phone = phone.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+    } else {
+      phone = phone.replace(/^(\d*)/, '($1');
+    }
+    e.target.value = phone;
+  });
 
-    // Obtém os valores dos campos do formulário
+  // Função para salvar dados no Firestore
+  document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
     const name = document.getElementById('name').value;
     const age = document.getElementById('age').value;
     const email = document.getElementById('email').value;
@@ -224,76 +239,51 @@
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
     try {
-      // Salva os dados no Firestore
-      const docRef = await addDoc(collection(db, 'inscricoes'), {
-        name,
-        age,
-        email,
-        phone,
-        church,
-        shepherd,
-        paymentMethod,
-        timestamp: new Date()
+      await addDoc(collection(db, 'inscricoes'), {
+        name: name,
+        age: age,
+        email: email,
+        phone: phone,
+        church: church,
+        shepherd: shepherd,
+        paymentMethod: paymentMethod
       });
-
-      // Exibe uma mensagem de sucesso ou redireciona
-      alert('Inscrição realizada com sucesso!');
-      // Limpa o formulário
+      alert('Inscrição enviada com sucesso!');
       document.getElementById('registrationForm').reset();
     } catch (error) {
-      console.error('Erro ao salvar os dados:', error);
-      alert('Ocorreu um erro ao enviar os dados. Por favor, tente novamente.');
+      console.error('Erro ao enviar inscrição: ', error);
+      alert('Erro ao enviar inscrição. Tente novamente.');
     }
   });
 
-  // Função para aplicar a máscara de telefone em tempo real
-  document.getElementById('phone').addEventListener('input', function (e) {
-    let x = e.target.value.replace(/\D/g, '');
-    if (x.length > 0) {
-      x = '(' + x.substring(0, 2) + ') ' + x.substring(2, 7) + '-' + x.substring(7, 11);
-    }
-    e.target.value = x;
+  // Funções para mostrar/esconder informações de pagamento
+  document.getElementById('money').addEventListener('change', function() {
+    document.getElementById('moneyInfo').style.display = 'block';
+    document.getElementById('installmentsInfo').style.display = 'none';
+    document.getElementById('AvistaInfo').style.display = 'none';
+    document.getElementById('pixInfo').style.display = 'none';
   });
 
-  // Função para validar o email em tempo real
-  document.getElementById('email').addEventListener('input', function (e) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValidEmail = emailPattern.test(e.target.value);
-    if (!isValidEmail) {
-      e.target.setCustomValidity('Por favor, insira um endereço de email válido.');
-    } else {
-      e.target.setCustomValidity('');
-    }
+  document.getElementById('installments').addEventListener('change', function() {
+    document.getElementById('installmentsInfo').style.display = 'block';
+    document.getElementById('moneyInfo').style.display = 'none';
+    document.getElementById('AvistaInfo').style.display = 'none';
+    document.getElementById('pixInfo').style.display = 'none';
   });
 
-  // Exibir informações de pagamento adicionais quando o usuário selecionar uma opção
-  document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
-    radio.addEventListener('change', function () {
-      document.querySelectorAll('.payment-info').forEach((info) => {
-        info.style.display = 'none';
-      });
-      if (this.checked) {
-        const infoId = this.id + 'Info';
-        const infoDiv = document.getElementById(infoId);
-        if (infoDiv) {
-          infoDiv.style.display = 'block';
-        }
-        if (this.id === 'pix') {
-          document.getElementById('pixInfo').style.display = 'block';
-        } else {
-          document.getElementById('pixInfo').style.display = 'none';
-        }
-      }
-    });
+  document.getElementById('pix').addEventListener('change', function() {
+    document.getElementById('pixInfo').style.display = 'block';
+    document.getElementById('AvistaInfo').style.display = 'block';
+    document.getElementById('installmentsInfo').style.display = 'none';
+    document.getElementById('moneyInfo').style.display = 'none';
   });
 
-  // Função para copiar o código Pix ao clicar
   function copyPixCode() {
-    const pixCode = document.getElementById('pixCode').textContent;
+    const pixCode = document.getElementById('pixCode').innerText;
     navigator.clipboard.writeText(pixCode).then(() => {
       alert('Código Pix copiado para a área de transferência!');
-    }).catch((err) => {
-      console.error('Erro ao copiar o código Pix:', err);
+    }, (err) => {
+      console.error('Erro ao copiar código Pix: ', err);
     });
   }
 </script>
