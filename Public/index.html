@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <title>Emac 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
     /* Estilo do acesso administrativo */
@@ -29,6 +32,11 @@
     }
     body{
       background-color: #3A0D56;
+    }
+    .card{
+      border-radius: 20px;
+      background-color: #E9ECEF;
+      font-family: 'Poppins';
     }
 
     .container-fluid{
@@ -190,103 +198,103 @@
 
   // Configuração do Firebase
   const firebaseConfig = {
-    apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yP04",
-    authDomain: "emac-ba92c.firebaseapp.com",
-    projectId: "emac-ba92c",
-    storageBucket: "emac-ba92c.appspot.com",
-    messagingSenderId: "717186027614",
-    appId: "1:717186027614:web:e9ab4b11b38efbc00b24cf"
+    apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yXX",
+    authDomain: "emac2024.firebaseapp.com",
+    projectId: "emac2024",
+    storageBucket: "emac2024.appspot.com",
+    messagingSenderId: "1234567890",
+    appId: "1:1234567890:web:abc123def456"
   };
 
   // Inicializa o Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Adiciona um listener ao formulário
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registrationForm');
-    const pixRadio = document.getElementById('pix');
-    const installmentsRadio = document.getElementById('installments');
-    const pixInfo = document.getElementById('pixInfo');
-    const moneyInfo = document.getElementById('moneyInfo')
-    const parcelamentoInfo = document.getElementById('installmentsInfo')
-    const MoneyRadio = document.getElementById('money')
-    const avistainfo = document.getElementById('AvistaInfo')
+  // Função para manipular a submissão do formulário
+  document.getElementById('registrationForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault(); // Previne o envio padrão do formulário
+    // Obtém os valores dos campos do formulário
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const church = document.getElementById('church').value;
+    const shepherd = document.getElementById('shepherd').value;
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-      // Coleta os dados do formulário
-      const formData = new FormData(form);
-      const data = {};
-      formData.forEach((value, key) => {
-        if (key === 'name') {
-          data[key] = value.toUpperCase();
-        } else {
-          data[key] = value;
-        }
+    try {
+      // Salva os dados no Firestore
+      const docRef = await addDoc(collection(db, 'inscricoes'), {
+        name,
+        age,
+        email,
+        phone,
+        church,
+        shepherd,
+        paymentMethod,
+        timestamp: new Date()
       });
 
-      // Adiciona os campos de presença e status de pagamento com valores padrão
-      data.oficinas = null
-      data.presence = null;
-      data.paymentStatus = null;
-      data.interno = true
+      // Exibe uma mensagem de sucesso ou redireciona
+      alert('Inscrição realizada com sucesso!');
+      // Limpa o formulário
+      document.getElementById('registrationForm').reset();
+    } catch (error) {
+      console.error('Erro ao salvar os dados:', error);
+      alert('Ocorreu um erro ao enviar os dados. Por favor, tente novamente.');
+    }
+  });
 
-      // Verifica se o email já está registrado
-      const email = data.email;
-      const q = query(collection(db, "inscricoes"), where("email", "==", email));
-      const querySnapshot = await getDocs(q);
+  // Função para aplicar a máscara de telefone em tempo real
+  document.getElementById('phone').addEventListener('input', function (e) {
+    let x = e.target.value.replace(/\D/g, '');
+    if (x.length > 0) {
+      x = '(' + x.substring(0, 2) + ') ' + x.substring(2, 7) + '-' + x.substring(7, 11);
+    }
+    e.target.value = x;
+  });
 
-      if (querySnapshot.empty) {
-        // Se o email não está registrado, adiciona um novo documento no Firestore
-        await addDoc(collection(db, "inscricoes"), data);
-        alert('Inscrição enviada com sucesso!');
-        form.reset(); // Reseta o formulário após o envio
-      } else {
-        // Se o email já está registrado, exibe uma mensagem de erro
-        alert('Este email já foi registrado.');
-      }
-    });
+  // Função para validar o email em tempo real
+  document.getElementById('email').addEventListener('input', function (e) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = emailPattern.test(e.target.value);
+    if (!isValidEmail) {
+      e.target.setCustomValidity('Por favor, insira um endereço de email válido.');
+    } else {
+      e.target.setCustomValidity('');
+    }
+  });
 
-
-    pixRadio.addEventListener('change', function() {
-      if (pixRadio.checked) {
-        pixInfo.style.display = 'block';
-        parcelamentoInfo.style.display = 'none';
-        moneyInfo.style.display = 'none';
-        avistainfo.style.display = 'block'
-      }
-
-    });
-
-    MoneyRadio.addEventListener('change', function (){
-      if (MoneyRadio.checked) {
-        moneyInfo.style.display = 'block';
-        pixInfo.style.display = 'none';
-        avistainfo.style.display = 'none'
-      }
-    })
-
-    installmentsRadio.addEventListener('change', function() {
-      if (installmentsRadio.checked) {
-        parcelamentoInfo.style.display = 'block';
-        pixInfo.style.display = 'none';
-        moneyInfo.style.display = 'none';
-        avistainfo.style.display = 'none'
+  // Exibir informações de pagamento adicionais quando o usuário selecionar uma opção
+  document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
+    radio.addEventListener('change', function () {
+      document.querySelectorAll('.payment-info').forEach((info) => {
+        info.style.display = 'none';
+      });
+      if (this.checked) {
+        const infoId = this.id + 'Info';
+        const infoDiv = document.getElementById(infoId);
+        if (infoDiv) {
+          infoDiv.style.display = 'block';
+        }
+        if (this.id === 'pix') {
+          document.getElementById('pixInfo').style.display = 'block';
+        } else {
+          document.getElementById('pixInfo').style.display = 'none';
+        }
       }
     });
   });
 
+  // Função para copiar o código Pix ao clicar
   function copyPixCode() {
-    const pixCode = document.getElementById('pixCode');
-    const textArea = document.createElement('textarea');
-    textArea.value = pixCode.textContent;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    alert('Código Pix copiado para a área de transferência!');
+    const pixCode = document.getElementById('pixCode').textContent;
+    navigator.clipboard.writeText(pixCode).then(() => {
+      alert('Código Pix copiado para a área de transferência!');
+    }).catch((err) => {
+      console.error('Erro ao copiar o código Pix:', err);
+    });
   }
 </script>
 </body>
