@@ -1,10 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oficinas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0EDF6;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #008cba;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #005f7f;
+        }
+        .descricao {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            button {
+                width: 100%;
+                margin-top: 5px;
+            }
+        }
+    </style>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <img src="img/teste.png" alt="Imagem da Oficina 1">
+                <h2>Título da Oficina 1</h2>
+                <p>Descrição da oficina 1</p>
+                <button onclick="exibirDescricao('descricao01')">Saiba Mais</button>
+                <div id="descricao01" class="descricao">
+                    <p>Conteúdo adicional da oficina 1.</p>
+                </div>
+                <button onclick="openModal('1')">Inscrever-se</button>
+            </div>
+        </div>
+        <!-- Adicione mais cards conforme necessário -->
+    </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="inscricaoModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Inscrição</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="inscricaoForm">
+                    <input type="hidden" id="oficinaId">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="igreja">Igreja</label>
+                        <input type="text" class="form-control" id="igreja">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDxYtN9gblk_LQ69dN1EEiUy-wHF89yP04",
+        authDomain: "emac-ba92c.firebaseapp.com",
+        projectId: "emac-ba92c",
+        storageBucket: "emac-ba92c.appspot.com",
+        messagingSenderId: "717186027614",
+        appId: "1:717186027614:web:e9ab4b11b38efbc00b24cf"
+    };
+
+    // Inicializa o Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function exibirDescricao(id) {
+        const descricao = document.getElementById(id);
+        descricao.style.display = descricao.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function openModal(oficinaId) {
+        // Define o ID da oficina no modal
+        document.getElementById('oficinaId').value = oficinaId;
+        // Limpa o campo de email e nome
+        document.getElementById('email').value = '';
+        document.getElementById('nome').value = '';
+        document.getElementById('igreja').value = '';
+        // Exibe o modal
+        $('#inscricaoModal').modal('show');
+    }
+
+    document.getElementById('inscricaoForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const oficinaId = document.getElementById('oficinaId').value;
+        const email = document.getElementById('email').value;
+        const nome = document.getElementById('nome').value;
+        const igreja = document.getElementById('igreja').value;
+
+        // Verifica se o email já está cadastrado
+        const usersRef = db.ref('inscricoes');
+        usersRef.orderByChild('email').equalTo(email).once('value').then(snapshot => {
+            if (snapshot.exists()) {
+                // Atualiza o campo oficina para o usuário existente
+                snapshot.forEach(childSnapshot => {
+                    childSnapshot.ref.update({ oficina: oficinaId }).then(() => {
+                        alert('Inscrição atualizada com sucesso!');
+                        $('#inscricaoModal').modal('hide');
+                    }).catch(error => {
+                        console.error('Erro ao atualizar inscrição:', error);
+                        alert('Ocorreu um erro. Tente novamente.');
+                    });
+                });
+            } else {
+                // Adiciona um novo usuário
+                usersRef.push({
+                    nome: nome,
+                    email: email,
+                    igreja: igreja,
+                    oficina: oficinaId
+                }).then(() => {
+                    alert('Inscrição realizada com sucesso!');
+                    $('#inscricaoModal').modal('hide');
+                }).catch(error => {
+                    console.error('Erro ao salvar inscrição:', error);
+                    alert('Ocorreu um erro. Tente novamente.');
+                });
+            }
+        }).catch(error => {
+            console.error('Erro ao verificar email:', error);
+            alert('Ocorreu um erro. Tente novamente.');
+        });
+    });
+</script>
 </body>
 </html>

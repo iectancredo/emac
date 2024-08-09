@@ -27,6 +27,9 @@
       width: 70px; /* Ajuste o tamanho do ícone do botão flutuante */
       height: 70px;
     }
+    body{
+      background-color: #3A0D56;
+    }
 
     .container-fluid{
       padding: 20px;
@@ -45,10 +48,12 @@
       }
       .banner-container {
         display: block;
+        justify-content: center;
         flex: 1;
         padding: 20px; /* Adiciona espaçamento ao redor do banner */
       }
       .banner-container img {
+        border-radius: 10px;
         width: 100%; /* Ajusta a largura da imagem para 100% do contêiner */
         height: auto;
       }
@@ -62,6 +67,7 @@
       }
 
       .banner-container img {
+        border-radius: 10px;
         width: 100%; /* Ajusta a largura para telas pequenas */
         height: auto; /* Mantém a proporção da imagem */
       }
@@ -77,14 +83,17 @@
       margin-bottom: 20px;
     }
     #pixInfo img {
-
-
       max-width: 50%;
       height: auto;
     }
     #pixCode {
       cursor: pointer;
       color: #007bff;
+    }
+    {
+    #registrationForm{
+      border-radius: 100px;
+    }
     }
   </style>
 </head>
@@ -93,13 +102,13 @@
 <div class="container-fluid">
   <div class="row ">
     <div class="col-sm-12 banner-container">
-      <img id="banner" src="img/teste.png" alt="Banner">
+      <img id="banner" src="img/banner.jpeg" alt="Banner">
     </div>
     <div class="col-sm-12 col-lg-6">
       <div class="card">
         <div class="card-body">
           <h3 class="card-title text-center mb-4">Inscrição EMAC 2024</h3>
-          <form id="registrationForm">
+          <form id="registrationForm" style="border-radius: 80px">
             <div class="form-group">
               <label for="name">Nome</label>
               <input type="text" class="form-control" id="name" name="name" placeholder="Pedro Henrique" required>
@@ -219,8 +228,10 @@
       });
 
       // Adiciona os campos de presença e status de pagamento com valores padrão
+      data.oficinas = null
       data.presence = null;
       data.paymentStatus = null;
+      data.interno = true
 
       // Verifica se o email já está registrado
       const email = data.email;
