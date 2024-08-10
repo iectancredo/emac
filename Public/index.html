@@ -264,7 +264,7 @@
 
       // Se o email não existir, adiciona o novo documento
       await addDoc(collection(db, 'inscricoes'), {
-        name: name,
+        name: name.toUpperCase(),
         age: age,
         email: email,
         phone: phone,
