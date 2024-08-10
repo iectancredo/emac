@@ -190,6 +190,14 @@
   </div>
 </div>
 
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init("your_user_id"); // Substitua "your_user_id" pelo seu user_id do EmailJS
+  })();
+</script>
+
+
 <!-- Bootstrap JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -234,6 +242,7 @@
   // Função para salvar dados no Firestore
   document.getElementById('registrationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const name = document.getElementById('name').value;
     const age = document.getElementById('age').value;
     const email = document.getElementById('email').value;
@@ -243,6 +252,17 @@
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
     try {
+      // Verifica se o email já existe na coleção 'inscricoes'
+      const q = query(collection(db, 'inscricoes'), where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Se a consulta retornar algum documento, o email já está registrado
+        alert('Este e-mail já foi utilizado para uma inscrição.');
+        return;
+      }
+
+      // Se o email não existir, adiciona o novo documento
       await addDoc(collection(db, 'inscricoes'), {
         name: name,
         age: age,
@@ -254,6 +274,7 @@
         paymentStatus: null,
         presence: null,
       });
+
       alert('Inscrição enviada com sucesso!');
       document.getElementById('registrationForm').reset();
       // Redireciona para o grupo no WhatsApp
@@ -264,6 +285,7 @@
       alert('Erro ao enviar inscrição. Tente novamente.');
     }
   });
+
 
   // Funções para mostrar/esconder informações de pagamento
   document.getElementById('money').addEventListener('change', function() {
