@@ -8,34 +8,47 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
+            padding: 30px;
+            background-color: #3A0D56; /* Cor de fundo igual à da página de inscrição */
+            font-family: 'Poppins', sans-serif; /* Fonte igual à da página de inscrição */
         }
-        .container {
+        .container-fluid {
             padding: 20px;
+            background-color: #e7e6e6; /* Cor de fundo dos cards */
+            border-radius: 20px; /* Adiciona bordas arredondadas como na página de inscrição */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve para adicionar profundidade */
         }
         .form-group {
             margin-bottom: 20px;
         }
         table {
             margin-top: 20px;
+            background-color: #ffffff; /* Fundo branco para a tabela */
+            border-radius: 20px; /* Bordas arredondadas para a tabela */
+            overflow: hidden; /* Para garantir que as bordas arredondadas sejam aplicadas */
+        }
+        th, td {
+            text-align: center;
         }
         .btn-danger {
-            margin: 0;
+            background-color: #dc3545; /* Cor do botão removido */
+            border: none; /* Remove a borda padrão do botão */
         }
-        .container {
-            margin-top: 20px;
+        .btn-danger:hover {
+            background-color: #c82333; /* Cor do botão removido ao passar o mouse */
         }
         .text-center {
             margin-bottom: 20px;
+            color: black; /* Cor azul para o título */
         }
-        #total_inscritos {
+        #total_inscritos, #total_presentes, #total_pagamentos {
             font-weight: bold;
+            color: #007bff; /* Cor azul para os totais */
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
     <h2 class="text-center">Painel Administrativo</h2>
     <div class="form-group">
         <input type="text" id="search-input" class="form-control" placeholder="Pesquise por um inscrito">
@@ -69,7 +82,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
     import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
-    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc, updateDoc} from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -168,7 +181,7 @@
             });
         } catch (e) {
             console.error('Erro ao atualizar a presença:', error);
-            
+
         }
     }
 
