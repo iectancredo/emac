@@ -147,9 +147,9 @@
                 <td>${inscrito.paymentMethod || 'N/A'}</td>
                 <td>
   <select onchange="updateParcelamento('${doc.id}', this.value)">
-  <option value="pending" ${inscrito.paymentStatus === 'Pix' ? 'selected' : ''}>Não Aplicavel</option>
-    <option value="pending" ${inscrito.paymentStatus === 'parcela01' ? 'selected' : ''}>Parcela 01</option>
-    <option value="paid" ${inscrito.paymentStatus === 'parcela02' ? 'selected' : ''}>Parcela 02</option>
+  <option value="pending" ${inscrito.installment === 'Pix' ? 'selected' : ''}>Não Aplicavel</option>
+    <option value="pending" ${inscrito.installment === 'parcela01' ? 'selected' : ''}>Parcela 01</option>
+    <option value="paid" ${inscrito.installment === 'parcela02' ? 'selected' : ''}>Parcela 02</option>
   </select>
 </td>
 
