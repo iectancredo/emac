@@ -147,7 +147,7 @@
                 <td>${inscrito.paymentMethod || 'N/A'}</td>
                 <td>
   <select onchange="updateParcelamento('${doc.id}', this.value)">
-  <option value="Não Aplicavel" ${inscrito.installment === 'Pix' ? 'selected' : ''}>Não Aplicavel</option>
+  <option value="Não Aplicavel" ${inscrito.installment === 'Não Aplicavel' ? 'selected' : ''}>Não Aplicavel</option>
     <option value="Parcela 01" ${inscrito.installment === 'parcela01' ? 'selected' : ''}>Parcela 01</option>
     <option value="Parcela 02" ${inscrito.installment === 'parcela02' ? 'selected' : ''}>Parcela 02</option>
   </select>
