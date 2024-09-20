@@ -145,7 +145,14 @@
                 <td>${inscrito.shepherd || 'N/A'}</td>
                 <td>${inscrito.phone || 'N/A'}</td>
                 <td>${inscrito.paymentMethod || 'N/A'}</td>
-                <td>${inscrito.oficina || 'N/A'}</td>
+                <td>
+  <select onchange="updateParcelamento('${doc.id}', this.value)">
+  <option value="pending" ${inscrito.paymentStatus === 'Pix' ? 'selected' : ''}>Não Aplicavel</option>
+    <option value="pending" ${inscrito.paymentStatus === 'parcela01' ? 'selected' : ''}>Parcela 01</option>
+    <option value="paid" ${inscrito.paymentStatus === 'parcela02' ? 'selected' : ''}>Parcela 02</option>
+  </select>
+</td>
+
                 <td><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
                 <td><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
                 <td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
@@ -188,6 +195,17 @@
     }
 
     window.updatePayment = async function (id,isChecked ){
+        try{
+            await updateDoc(doc(db,'inscricoes',id),{
+                paymentStatus: isChecked
+            });
+        } catch (e) {
+            console.error('Erro ao atualizar o pagamento:', error);
+
+        }
+    }
+
+    window.updateParcelamento = async function (id,isChecked ){
         try{
             await updateDoc(doc(db,'inscricoes',id),{
                 paymentStatus: isChecked

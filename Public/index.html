@@ -276,7 +276,7 @@
     const church = document.getElementById('church').value;
     const shepherd = document.getElementById('shepherd').value;
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-    const Installment = "Ausente"
+
 
     try {
       // Verifica se o email já existe na coleção 'inscricoes'
@@ -300,6 +300,7 @@
         paymentMethod: paymentMethod,
         paymentStatus: null,
         presence: null,
+        installment: null
       });
 
       alert('Inscrição enviada com sucesso!');
