@@ -65,7 +65,6 @@
             <th>Pastor Responsável</th>
             <th>Telefone</th>
             <th>Metodo de Pagamento</th>
-            <th>Oficina</th>
             <th>Presença</th>
             <th>Pagamento</th>
             <th>Ações</th>
@@ -112,12 +111,14 @@
         const input = document.getElementById('search-input').value.toUpperCase(); // Converte a entrada para caixa alta
         console.log('Pesquisa:', input); // Adicione este log para verificar o valor de input
         let inscritosRef = collection(db, 'inscricoes');
+        let oficinas = collection(db, 'oficinas')
 
         if (input) {
             inscritosRef = query(inscritosRef, where('name', '>=', input), where('name', '<=', input + '\uf8ff'));
         }
 
         const inscritosSnapshot = await getDocs(inscritosRef);
+        const oficinasSnapshot = await  getDocs(oficinas)
         console.log('Snapshot:', inscritosSnapshot.docs);
 
         // Adicione este log para verificar o resultado da consulta

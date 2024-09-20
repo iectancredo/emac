@@ -71,14 +71,41 @@
             align-items: center;
             font-size: 25px;
         }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
     </style>
+    <!-- jQuery primeiro -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Popper.js e Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
 </head>
 <body>
 <div id="titulo">
@@ -91,7 +118,7 @@
                 <img src="img/teste.png" alt="Imagem da Oficina 1">
                 <h2>A evangelização no sertão</h2>
                 <p>Descrição da oficina 1</p>
-                <button onclick="openModal('1')">Inscrever-se</button>
+                <button onclick="openModal(1)">Inscrever-se</button>
             </div>
         </div>
         <!--OFICINA 02-->
@@ -153,40 +180,49 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="inscricaoModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Inscrição</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<!-- Modal -->
+<div class="modal" id="inscricaoModal"  style="display: none">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5>Inscrição</h5>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="registrationForm"> <!-- Corrigido para registrationForm -->
+            <input type="hidden" id="oficinaId">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" required>
             </div>
-            <div class="modal-body">
-                <form id="inscricaoForm">
-                    <input type="hidden" id="oficinaId">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="igreja">Igreja</label>
-                        <input type="text" class="form-control" id="igreja">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" class="form-control" id="name"> <!-- Corrigido o ID para 'name' -->
             </div>
+            <div class="form-group">
+                <label for="phone">Telefone</label> <!-- Corrigido o label -->
+                <input type="text" class="form-control" id="phone">
+            </div>
+            <div class="form-group">
+                <label for="church">Igreja</label>
+                <input type="text" class="form-control" id="church"> <!-- Corrigido o ID para 'church' -->
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    function openModal(oficinaId) {
+        document.getElementById('oficinaId').value = oficinaId;
+        document.getElementById('inscricaoModal').style.display = 'flex';  // Exibe o modal
+    }
+
+    function closeModal() {
+        document.getElementById('inscricaoModal').style.display = 'none';  // Oculta o modal
+    }
+</script>
+
 
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
@@ -208,16 +244,9 @@
     const db = getFirestore(app);
 
 
-    function openModal(oficinaId) {
-        // Define o ID da oficina no modal
-        document.getElementById('oficinaId').value = oficinaId;
-        // Limpa o campo de email e nome
-        document.getElementById('email').value = '';
-        document.getElementById('nome').value = '';
-        document.getElementById('igreja').value = '';
-        // Exibe o modal
-        $('#inscricaoModal').modal('show');
-    }
+
+
+
 
     // Função para salvar dados no Firestore
     document.getElementById('registrationForm').addEventListener('submit', async (e) => {
@@ -232,7 +261,7 @@
 
         try {
             // Verifica se o email já existe na coleção 'inscricoes'
-            const q = query(collection(db, 'inscricoes'), where('email', '==', email));
+            const q = query(collection(db, 'oficinas'), where('email', '==', email));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
