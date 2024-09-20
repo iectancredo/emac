@@ -90,15 +90,20 @@
             const q = query(collection(db, 'oficinas'), where('oficina', '==', oficina.id));
             const querySnapshot = await getDocs(q);
 
-            // Exibe a oficina e a quantidade de inscritos
+            // Cria um card para cada oficina
             const oficinaCard = document.createElement('div');
             oficinaCard.classList.add('card');
             oficinaCard.innerHTML = `
-                    <h2>${oficina.name}</h2>
-                    <p><strong>Inscritos:</strong> ${querySnapshot.size}</p>
-                    <button class="btn-download" onclick="downloadCSV('${oficina.id}', '${oficina.name}')">Baixar Lista</button>
-                `;
+                <h2>${oficina.name}</h2>
+                <p><strong>Inscritos:</strong> ${querySnapshot.size}</p>
+                <button class="btn-download">Baixar Lista</button>
+            `;
             document.getElementById('oficinasContainer').appendChild(oficinaCard);
+
+            // Adiciona o evento de clique no botão dentro do JavaScript
+            oficinaCard.querySelector('.btn-download').addEventListener('click', () => {
+                downloadCSV(oficina.id, oficina.name);
+            });
         }
     }
 
