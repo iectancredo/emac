@@ -12,24 +12,24 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     .floating-clock {
-      position: fixed;
-      bottom: 150px;
-      right: 15px;
-      z-index: 1000;
-      background-color: #fff;
-      border-radius: 50%;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 15px;
+      position: fixed; /* Fixa a div no topo da página */
+      top: 10px; /* Distância do topo */
+      left: 10px; /* Distância da esquerda */
+      background-color: white; /* Fundo branco para destaque */
+      padding: 7px; /* Espaçamento interno */
+      border: 1px solid #ccc; /* Borda para definição */
+      border-radius: 5px; /* Bordas arredondadas */
+      width: auto; /* Ajuste automático da largura */
+      z-index: 1000; /* Garante que a div fique acima de outros elementos */
     }
+
 
     .floating-clock i {
       font-size: 30px;
       color: #007bff;
     }
 
-    .floating-clock:hover {
-      background-color: #007bff;
-    }
+
 
     .floating-clock:hover i {
       color: white;
@@ -207,16 +207,20 @@
               <div class="floating-button">
                 <img id="img" src="img/Whasticon.png" alt="icon">
               </div>
-              <!-- Botão flutuante de relógio -->
-              <div class="floating-clock">
-                <a href="#" data-toggle="tooltip" data-placement="left" title="Inscrições até 30 de setembro de 2024">
-                  <i class="fas fa-clock"></i>
-                </a>
-              </div>
-
             </a>
+
+            <!-- Botão flutuante de relógio -->
+            <div class="floating-clock">
+              <img src="img/clock.png" style="width: 80px;">
+              <p style="display: inline; vertical-align: middle;">Inscrições até 15 de Outubro de 2024</p>
+            </div>
+
+
+
+
+
+
           </div>
-        </div>
       </div>
     </div>
   </div>
