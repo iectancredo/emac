@@ -147,9 +147,9 @@
                 <td>${inscrito.shepherd || 'N/A'}</td>
                 <td>${inscrito.phone || 'N/A'}</td>
                 <td>${inscrito.paymentMethod || 'N/A'}</td>
-                <td><input type="checkbox" ${inscrito.installment ? 'checked' : ''} onchange="updateInstallment('${doc.id}', this.checked)"></td>
-                <td><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
-                <td><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
+                <td style="background-color: lightcoral"><input type="checkbox" ${inscrito.installment ? 'checked' : ''} onchange="updateInstallment('${doc.id}', this.checked)"></td>
+                <td style="background-color: lightgreen"><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
+                <td style="background-color: lightskyblue"><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
                 <td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
                 listaInscritos.appendChild(row);
                 count++;
