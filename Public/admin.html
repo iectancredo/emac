@@ -66,9 +66,9 @@
             <th>Pastor Responsável</th>
             <th>Telefone</th>
             <th>Metodo de Pagamento</th>
-            <th>Metade</th>
+            <th>$-Metade</th>
+            <th>$-Completo</th>
             <th>Presença</th>
-            <th>Pagamento</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -148,8 +148,8 @@
                 <td>${inscrito.phone || 'N/A'}</td>
                 <td>${inscrito.paymentMethod || 'N/A'}</td>
                 <td><input type="checkbox" ${inscrito.installment ? 'checked' : ''} onchange="updateInstallment('${doc.id}', this.checked)"></td>
-                <td><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
                 <td><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
+                <td><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
                 <td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
                 listaInscritos.appendChild(row);
                 count++;
