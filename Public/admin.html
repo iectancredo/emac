@@ -66,7 +66,7 @@
             <th>Pastor Responsável</th>
             <th>Telefone</th>
             <th>Metodo de Pagamento</th>
-            <th>Parcelamento</th>
+            <th>Metade</th>
             <th>Presença</th>
             <th>Pagamento</th>
             <th>Ações</th>
@@ -147,14 +147,7 @@
                 <td>${inscrito.shepherd || 'N/A'}</td>
                 <td>${inscrito.phone || 'N/A'}</td>
                 <td>${inscrito.paymentMethod || 'N/A'}</td>
-                <td>
-  <select onchange="updateParcelamento('${doc.id}', this.value)">
-  <option value="Não Aplicavel" ${inscrito.installment === 'Não Aplicavel' ? 'selected' : ''}>Não Aplicavel</option>
-    <option value="Parcela 01" ${inscrito.installment === 'parcela01' ? 'selected' : ''}>Parcela 01</option>
-    <option value="Parcela 02" ${inscrito.installment === 'parcela02' ? 'selected' : ''}>Parcela 02</option>
-  </select>
-</td>
-
+                <td><input type="checkbox" ${inscrito.installment ? 'checked' : ''} onchange="updateInstallment('${doc.id}', this.checked)"></td>
                 <td><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
                 <td><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
                 <td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
@@ -207,7 +200,7 @@
         }
     }
 
-    window.updateParcelamento = async function (id,isChecked ){
+    window.updateInstallment = async function (id,isChecked ){
         try{
             await updateDoc(doc(db,'inscricoes',id),{
                 installment: isChecked
