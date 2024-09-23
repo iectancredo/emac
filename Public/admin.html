@@ -84,7 +84,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
     import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
-    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+    import { getFirestore, collection, getDocs, query, where, deleteDoc, doc, updateDoc, orderBy } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -115,6 +115,7 @@
         console.log('Pesquisa:', input); // Adicione este log para verificar o valor de input
         let inscritosRef = collection(db, 'inscricoes');
         let oficinas = collection(db, 'oficinas')
+
 
         if (input) {
             inscritosRef = query(inscritosRef, where('name', '>=', input), where('name', '<=', input + '\uf8ff'));

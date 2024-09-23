@@ -235,7 +235,7 @@
 <!-- Firebase App (base) SDK -->
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
-  import { getFirestore, collection, query, where, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+  import { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
 
   // Configuração do Firebase
@@ -270,6 +270,7 @@
   });
 
   // Função para salvar dados no Firestore
+  // Função para salvar dados no Firestore
   document.getElementById('registrationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -281,14 +282,12 @@
     const shepherd = document.getElementById('shepherd').value;
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-
     try {
       // Verifica se o email já existe na coleção 'inscricoes'
       const q = query(collection(db, 'inscricoes'), where('email', '==', email));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        // Se a consulta retornar algum documento, o email já está registrado
         alert('Este e-mail já foi utilizado para uma inscrição.');
         return;
       }
@@ -304,7 +303,8 @@
         paymentMethod: paymentMethod,
         paymentStatus: null,
         presence: null,
-        installment: null
+        installment: null,
+        dataDeInscricao: serverTimestamp() // Adiciona a data atual do servidor
       });
 
       alert('Inscrição enviada com sucesso!');
@@ -317,6 +317,7 @@
       alert('Erro ao enviar inscrição. Tente novamente.');
     }
   });
+
 
 
   // Funções para mostrar/esconder informações de pagamento
