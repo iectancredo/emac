@@ -41,7 +41,7 @@
             margin-bottom: 20px;
             color: black; /* Cor azul para o título */
         }
-        #total_inscritos, #total_presentes, #total_pagamentos {
+        #total_inscritos, #total_presentes, #total_pagamentos, #total_installment {
             font-weight: bold;
             color: #007bff; /* Cor azul para os totais */
         }
@@ -56,7 +56,8 @@
     </div>
     <p>Total de Inscritos: <span id="total_inscritos">0</span></p>
     <p>Total de Presentes: <span id="total_presentes">0</span></p>
-    <p>Total de Pagamentos: <span id="total_pagamentos">0</span></p>
+    <p>Total de Pagamentos primeira da parcela: <span id="total_installment">0</span></p>
+    <p>Total de Pagamentos Completos: <span id="total_pagamentos">0</span></p>
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -131,11 +132,13 @@
         const total = document.getElementById('total_inscritos');
         const totalPresentes = document.getElementById('total_presentes');
         const totalPagamentos = document.getElementById('total_pagamentos');
+        const totalInstallments = document.getElementById('total_installment')
 
         listaInscritos.innerHTML = '';
         let count = 0;
         let countPresentes = 0;
         let countPagamentos = 0;
+        let countInstallment = 0;
 
         inscritosSnapshot.forEach((doc) => {
             const inscrito = doc.data();
@@ -161,11 +164,15 @@
                 if(inscrito.paymentStatus){
                     countPagamentos++
                 }
+                if(inscrito.installment){
+                    countInstallment++
+                }
             }
         });
         total.textContent = count;
         totalPresentes.textContent = countPresentes;
         totalPagamentos.textContent = countPagamentos;
+        totalInstallments.textContent = countInstallment
     }
 
     window.removerins = async function(id){
