@@ -45,6 +45,19 @@
             font-weight: bold;
             color: #007bff; /* Cor azul para os totais */
         }
+        .card{
+            align-items: center;
+            padding: 10px;
+            font-size: 18pt;
+            border-radius: 10px;
+            margin: 5px;
+            justify-content: center;
+
+        }
+        #result{
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -54,10 +67,25 @@
     <div class="form-group">
         <input type="text" id="search-input" class="form-control" placeholder="Pesquise por um inscrito">
     </div>
-    <p>Total de Inscritos: <span id="total_inscritos">0</span></p>
-    <p>Total de Presentes: <span id="total_presentes">0</span></p>
-    <p>Total de Pagamentos da primeira parcela: <span id="total_installment">0</span></p>
-    <p>Total de Pagamentos Completos: <span id="total_pagamentos">0</span></p>
+    <div id="result" style="display: flex">
+        <div class="card">
+            <p>Total de Inscritos: <span id="total_inscritos">0</span></p>
+        </div>
+        <div class="card">
+            <p>Total de Presentes: <span id="total_presentes">0</span></p>
+        </div>
+        <div class="card">
+            <p>Total de Pagamentos da primeira parcela: <span id="total_installment">0</span></p>
+        </div>
+        <div class="card">
+            <p>Total de Pagamentos Completos: <span id="total_pagamentos">0</span></p>
+        </div>
+    </div>
+
+
+
+
+
     <table class="table table-bordered">
         <thead>
         <tr>
