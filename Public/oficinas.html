@@ -93,6 +93,18 @@
             cursor: pointer;
             font-size: 20px;
         }
+        #final{
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+        #final h3{
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            padding-top: 10px;
+        }
 
     </style>
     <!-- jQuery primeiro -->
@@ -115,63 +127,56 @@
     <div class="row">
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
-                <h2>A evangelização no sertão</h2>
-                <p>Descrição da oficina 1</p>
+                <img src="img/oficinas/1.png" alt="Imagem da Oficina 1">
+                <h2>A Adoração Cristã e a Musíca à Serviço da Igreja</h2>
                 <button onclick="openModal(1)">Inscrever-se</button>
             </div>
         </div>
         <!--OFICINA 02-->
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
+                <img src="img/oficinas/2.png" alt="Imagem da Oficina 1">
                 <h2>Conexão e relacionamento: Construindo pontes de amor</h2>
-                <p>Descrição da oficina 1</p>
                 <button onclick="openModal('2')">Inscrever-se</button>
             </div>
         </div>
         <!--OFICINA 03-->
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
-                <h2>A adoração Cristã e a Música à serviço da Igreja</h2>
-                <p>Descrição da oficina 1</p>
+                <img src="img/oficinas/3.png" alt="Imagem da Oficina 1">
+                <h2>Liderança que Transforma -Vocação e Identidade</h2>
                 <button onclick="openModal('3')">Inscrever-se</button>
             </div>
         </div>
         <!--OFICINA 04-->
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
-                <h2>Criatividade e Midia</h2>
-                <p>Descrição da oficina 1</p>
+                <img src="img/oficinas/4.png" alt="Imagem da Oficina 1">
+                <h2>Abrindo Caminho para os pequeninos</h2>
                 <button onclick="openModal('4')">Inscrever-se</button>
             </div>
         </div>
         <!-- OFICINA 05 -->
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
-                <h2>Abrindo o Caminho para o pequeninos</h2>
-                <p>Descrição da oficina 1</p>
+                <img src="img/oficinas/5.png" alt="Imagem da Oficina 1">
+                <h2>Criatividade e Mídia Luz, Câmera em Ação</h2>
                 <button onclick="openModal('5')">Inscrever-se</button>
             </div>
         </div>
         <!-- OFICINA 06 -->
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
-                <h2>Missão nas Universidades</h2>
-                <p>Descrição da oficina 1</p>
+                <img src="img/oficinas/6.png" alt="Imagem da Oficina 1">
+                <h2>Corações para o Sertão um chamado à Transformação</h2>
                 <button onclick="openModal('6')">Inscrever-se</button>
             </div>
         </div>
         <!-- OFICINA 07 -->
         <div class="col-md-6 col-lg-4">
             <div class="card">
-                <img src="img/teste.png" alt="Imagem da Oficina 1">
-                <h2>Pastoreio e Liderança</h2>
-                <p>Descrição da oficina 1</p>
+                <img src="img/oficinas/7.png" alt="Imagem da Oficina 1">
+                <h2>Desafio no Campus - A Jornada de um Missionário Universitério</h2>
                 <button onclick="openModal('7')">Inscrever-se</button>
             </div>
         </div>
@@ -210,8 +215,12 @@
             </form>
         </div>
     </div>
-</div>
 
+</div>
+<div id="final">
+    <h3>Realização</h3>
+    <img src="img/oficinas/logoofc.png">
+</div>
 <script>
     function openModal(oficinaId) {
         document.getElementById('oficinaId').value = oficinaId;
