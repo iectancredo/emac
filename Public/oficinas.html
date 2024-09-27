@@ -82,6 +82,8 @@
             justify-content: center;
             align-items: center;
         }
+
+
         .modal-content {
             background-color: #fff;
             padding: 20px;
@@ -148,6 +150,19 @@
         .btn:hover{
             background-color: #dda830;
         }
+        #aviso{
+            border: #dc3545;
+            background-color: #3A0D56;
+            color: white;
+            border-radius: 20px;
+            margin-top: 10px; /* Adicione uma margem superior para espaçar o aviso do título */
+            display: block;    /* Garante que ele ocupe o espaço correto */
+            position: static;
+        }
+        .modal-header{
+            display: block;
+        }
+
 
 
     </style>
@@ -234,9 +249,13 @@
 <div class="modal" id="inscricaoModal"  style="display: none">
     <div class="modal-content">
         <div class="modal-header">
-            <h5>Inscrição</h5>
+            <h5 id="title">Inscrição</h5>
+            <div id="aviso container">
+                <p>Participantes externos devem levar um kg de alimento não perecível</p>
+            </div>
             <span class="close-btn" onclick="closeModal()">&times;</span>
         </div>
+
         <div class="modal-body">
             <form id="registrationForm"> <!-- Corrigido para registrationForm -->
             <input type="hidden" id="oficinaId">
