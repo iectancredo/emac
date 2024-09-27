@@ -105,13 +105,38 @@
             text-align: center;
             padding-top: 10px;
         }
+
+        /* Estilos da imagem */
         .image {
-            transition: transform 0.3s ease; /* Transição suave */
-            cursor: pointer; /* Mostra o cursor de clique */
+            width: 100%;
+            max-width: 300px; /* Defina um tamanho máximo inicial */
+            transition: transform 0.3s ease;
+            cursor: pointer;
         }
+
+        /* Expansão da imagem */
         .image.expand {
             transform: scale(1.5); /* Expande a imagem em 150% */
+            z-index: 1001; /* Coloca a imagem acima da sobreposição */
         }
+
+        /* Sobreposição (overlay) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Cor do fundo escurecido */
+            z-index: 1000; /* Coloca o fundo abaixo da imagem */
+            display: none; /* Esconde o overlay inicialmente */
+        }
+
+        /* Exibe a sobreposição quando a imagem está expandida */
+        .overlay.active {
+            display: block;
+        }
+
 
     </style>
     <!-- jQuery primeiro -->
@@ -127,6 +152,7 @@
 
 </head>
 <body>
+<div class="overlay" id="overlay"></div>
 <div id="titulo">
     <h1>Selecione a sua oficina</h1>
 </div>
@@ -233,6 +259,7 @@
     function expandImage(imageElement) {
         // Seleciona todas as imagens com a classe 'image'
         const images = document.querySelectorAll('.image');
+        const overlay = document.getElementById('overlay'); // Seleciona o overlay
 
         // Remove a classe 'expand' de todas as imagens
         images.forEach(img => {
@@ -243,7 +270,22 @@
 
         // Alterna a classe 'expand' somente na imagem clicada
         imageElement.classList.toggle('expand');
+
+        // Verifica se a imagem está expandida e ativa o overlay
+        if (imageElement.classList.contains('expand')) {
+            overlay.classList.add('active'); // Mostra o fundo escurecido
+        } else {
+            overlay.classList.remove('active'); // Remove o fundo escurecido se a imagem foi reduzida
+        }
     }
+
+    // Adiciona um evento ao overlay para fechar a imagem e remover o fundo escurecido ao clicar no fundo
+    document.getElementById('overlay').addEventListener('click', function() {
+        const images = document.querySelectorAll('.image');
+        images.forEach(img => img.classList.remove('expand')); // Reduz todas as imagens
+        this.classList.remove('active'); // Esconde o fundo escurecido
+    });
+
 
     function openModal(oficinaId) {
         document.getElementById('oficinaId').value = oficinaId;
