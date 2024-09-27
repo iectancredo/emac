@@ -231,7 +231,18 @@
 <script>
 
     function expandImage(imageElement) {
-        imageElement.classList.toggle('expand'); // Alterna a classe 'expand'
+        // Seleciona todas as imagens com a classe 'image'
+        const images = document.querySelectorAll('.image');
+
+        // Remove a classe 'expand' de todas as imagens
+        images.forEach(img => {
+            if (img !== imageElement) {
+                img.classList.remove('expand');
+            }
+        });
+
+        // Alterna a classe 'expand' somente na imagem clicada
+        imageElement.classList.toggle('expand');
     }
 
     function openModal(oficinaId) {
