@@ -275,15 +275,15 @@
             </div>
             <div class="form-group">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control" id="name"> <!-- Corrigido o ID para 'name' -->
+                <input type="text" class="form-control" id="name" required> <!-- Corrigido o ID para 'name' -->
             </div>
             <div class="form-group">
                 <label for="phone">Telefone</label> <!-- Corrigido o label -->
-                <input type="text" class="form-control" id="phone">
+                <input type="text" class="form-control" id="phone" required>
             </div>
             <div class="form-group">
                 <label for="church">Igreja</label>
-                <input type="text" class="form-control" id="church"> <!-- Corrigido o ID para 'church' -->
+                <input type="text" class="form-control" id="church" required> <!-- Corrigido o ID para 'church' -->
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
@@ -298,12 +298,12 @@
 <script>
 
     let vagas = {
-        1: 15,
-        2: 15,
-        3: 15,
-        4: 15,
-        6: 15,
-        7: 15
+        1: 16,
+        2: 16,
+        3: 16,
+        4: 16,
+        6: 16,
+        7: 16
     }
 
     function inscrever(oficinaId){
@@ -315,8 +315,10 @@
                 document.getElementById('btn' + oficinaId).disable = true;
                 document.getElementById('btn' + oficinaId).innerText = 'Vagas Esgostadas'
             }
+            return true
         }else{
             alert('Não há mais vagas disponíveis para esta oficina.')
+            return false
         }
     }
 
@@ -397,6 +399,10 @@
         const oficina = document.getElementById('oficinaId').value;
         const church = document.getElementById('church').value;
 
+        if (!inscrever(oficina)) {
+            alert('Não há vagas disponíveis para esta oficina.');
+            return; // Interrompe a execução se não houver vagas
+        }
 
         try {
             // Verifica se o email já existe na coleção 'inscricoes'
@@ -417,7 +423,7 @@
                 oficina: oficina,
                 church: church
             });
-            inscrever(oficina);
+
             alert('Inscrição enviada com sucesso!');
             document.getElementById('registrationForm').reset();
             // Redireciona para o grupo no WhatsApp
