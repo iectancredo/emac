@@ -163,6 +163,9 @@
             display: block;
         }
 
+        .vagass{
+            padding: 10px;
+        }
 
 
     </style>
@@ -190,6 +193,7 @@
                 <img src="img/oficinas/1.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>A Adoração Cristã e a Musíca à Serviço da Igreja</h2>
                 <button onclick="openModal(1)">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas1">15</span></p>
             </div>
         </div>
         <!--OFICINA 02-->
@@ -198,6 +202,7 @@
                 <img src="img/oficinas/2.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Conexão e relacionamento: Construindo pontes de amor</h2>
                 <button onclick="openModal('2')">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas2">15</span></p>
             </div>
         </div>
         <!--OFICINA 03-->
@@ -206,6 +211,7 @@
                 <img src="img/oficinas/3.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Liderança que Transforma -Vocação e Identidade</h2>
                 <button onclick="openModal('3')">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas3">15</span></p>
             </div>
         </div>
         <!--OFICINA 04-->
@@ -214,6 +220,7 @@
                 <img src="img/oficinas/4.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Abrindo Caminho para os pequeninos</h2>
                 <button onclick="openModal('4')">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas4">15</span></p>
             </div>
         </div>
         <!-- OFICINA 05 -->
@@ -222,6 +229,7 @@
                 <img src="img/oficinas/5.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Criatividade e Mídia Luz, Câmera em Ação</h2>
                 <button onclick="openModal('5')">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas5">15</span></p>
             </div>
         </div>
         <!-- OFICINA 06 -->
@@ -230,6 +238,7 @@
                 <img src="img/oficinas/6.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Corações para o Sertão um chamado à Transformação</h2>
                 <button onclick="openModal('6')">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas6">15</span></p>
             </div>
         </div>
         <!-- OFICINA 07 -->
@@ -238,6 +247,7 @@
                 <img src="img/oficinas/7.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Desafio no Campus - A Jornada de um Missionário Universitário</h2>
                 <button onclick="openModal('7')">Inscrever-se</button>
+                <p class="vagass">Vagas Disponiveis: <span id="vagas7">15</span></p>
             </div>
         </div>
         <!-- Adicione mais cards conforme necessário -->
@@ -286,6 +296,30 @@
     <img src="img/oficinas/logoofc.png">
 </div>
 <script>
+
+    let vagas = {
+        1: 15,
+        2: 15,
+        3: 15,
+        4: 15,
+        6: 15,
+        7: 15
+    }
+
+    function inscrever(oficinaId){
+        if(vagas[oficinaId] > 0){
+            vagas[oficinaId] --;
+            document.getElementById('vagas' + oficinaId).innerText = vagas[oficinaId];
+
+            if(vagas[oficinaId] === 0){
+                document.getElementById('btn' + oficinaId).disable = true;
+                document.getElementById('btn' + oficinaId).innerText = 'Vagas Esgostadas'
+            }
+        }else{
+            alert('Não há mais vagas disponíveis para esta oficina.')
+        }
+    }
+
 
     function expandImage(imageElement) {
         // Seleciona todas as imagens com a classe 'image'
@@ -383,7 +417,7 @@
                 oficina: oficina,
                 church: church
             });
-
+            inscrever(oficina);
             alert('Inscrição enviada com sucesso!');
             document.getElementById('registrationForm').reset();
             // Redireciona para o grupo no WhatsApp
