@@ -402,6 +402,8 @@
 
             alert('Inscrição enviada com sucesso!');
             document.getElementById('registrationForm').reset();
+            window.location.reload();
+
 
         } catch (error) {
             console.error('Erro ao enviar inscrição: ', error);
