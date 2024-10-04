@@ -398,11 +398,7 @@
                 church: church
             });
 
-            // Atualiza o número de inscritos no Firestore para a oficina
-            const oficinaDocRef = doc(db, 'oficinas', oficina);
-            await updateDoc(oficinaDocRef, {
-                inscritos: increment(1)
-            });
+
 
             alert('Inscrição enviada com sucesso!');
             document.getElementById('registrationForm').reset();
