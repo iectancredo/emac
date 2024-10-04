@@ -163,9 +163,6 @@
             display: block;
         }
 
-        .vagass{
-            padding: 10px;
-        }
 
 
     </style>
@@ -192,35 +189,35 @@
             <div class="card">
                 <img src="img/oficinas/1.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>A Adoração Cristã e a Musíca à Serviço da Igreja</h2>
+                <p id="vagas-oficina-1">Vagas disponíveis: </p>
                 <button onclick="openModal(1)">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas1">15</span></p>
             </div>
         </div>
         <!--OFICINA 02-->
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <img src="img/oficinas/2.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
-                <h2>Conexão e relacionamento: Construindo pontes de Amor</h2>
+                <h2>Conexão e relacionamento: Construindo pontes de amor</h2>
+                <p id="vagas-oficina-2">Vagas disponíveis: </p>
                 <button onclick="openModal('2')">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas2">15</span></p>
             </div>
         </div>
         <!--OFICINA 03-->
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <img src="img/oficinas/3.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
-                <h2>Liderança que Transforma - Vocação e Identidade</h2>
+                <h2>Liderança que Transforma -Vocação e Identidade</h2>
+                <p id="vagas-oficina-3">Vagas disponíveis: </p>
                 <button onclick="openModal('3')">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas3">15</span></p>
             </div>
         </div>
         <!--OFICINA 04-->
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <img src="img/oficinas/4.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
-                <h2>Abrindo Caminho para os Pequeninos</h2>
+                <h2>Abrindo Caminho para os pequeninos</h2>
+                <p id="vagas-oficina-4">Vagas disponíveis: </p>
                 <button onclick="openModal('4')">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas4">15</span></p>
             </div>
         </div>
         <!-- OFICINA 05 -->
@@ -228,17 +225,17 @@
             <div class="card">
                 <img src="img/oficinas/5.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Criatividade e Mídia Luz, Câmera em Ação</h2>
+                <p id="vagas-oficina-5">Vagas disponíveis: </p>
                 <button onclick="openModal('5')">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas5">15</span></p>
             </div>
         </div>
         <!-- OFICINA 06 -->
         <div class="col-md-6 col-lg-4">
             <div class="card">
                 <img src="img/oficinas/6.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
-                <h2>Corações para o Sertão: Um Chamado à Transformação</h2>
+                <h2>Corações para o Sertão um chamado à Transformação</h2>
+                <p id="vagas-oficina-6">Vagas disponíveis: </p>
                 <button onclick="openModal('6')">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas6">15</span></p>
             </div>
         </div>
         <!-- OFICINA 07 -->
@@ -246,8 +243,8 @@
             <div class="card">
                 <img src="img/oficinas/7.png" alt="Imagem da Oficina 1" class="image" onclick="expandImage(this)">
                 <h2>Desafio no Campus - A Jornada de um Missionário Universitário</h2>
+                <p id="vagas-oficina-7">Vagas disponíveis: </p>
                 <button onclick="openModal('7')">Inscrever-se</button>
-                <p class="vagass">Vagas Disponiveis: <span id="vagas7">15</span></p>
             </div>
         </div>
         <!-- Adicione mais cards conforme necessário -->
@@ -260,7 +257,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 id="title">Inscrição</h5>
-            <div id="aviso container" style="display: none">
+            <div id="aviso container">
                 <p>Participantes externos devem levar um kg de alimento não perecível</p>
             </div>
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -268,24 +265,24 @@
 
         <div class="modal-body">
             <form id="registrationForm"> <!-- Corrigido para registrationForm -->
-            <input type="hidden" id="oficinaId">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" class="form-control" id="name" required> <!-- Corrigido o ID para 'name' -->
-            </div>
-            <div class="form-group">
-                <label for="phone">Telefone</label> <!-- Corrigido o label -->
-                <input type="text" class="form-control" id="phone" required>
-            </div>
-            <div class="form-group">
-                <label for="church">Igreja</label>
-                <input type="text" class="form-control" id="church" required> <!-- Corrigido o ID para 'church' -->
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+                <input type="hidden" id="oficinaId">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="name"> <!-- Corrigido o ID para 'name' -->
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefone</label> <!-- Corrigido o label -->
+                    <input type="text" class="form-control" id="phone">
+                </div>
+                <div class="form-group">
+                    <label for="church">Igreja</label>
+                    <input type="text" class="form-control" id="church"> <!-- Corrigido o ID para 'church' -->
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
         </div>
     </div>
@@ -296,32 +293,6 @@
     <img src="img/oficinas/logoofc.png">
 </div>
 <script>
-
-    let vagas = {
-        1: 14,
-        2: 16,
-        3: 16,
-        4: 16,
-        6: 16,
-        7: 16
-    }
-
-    function inscrever(oficinaId){
-        if(vagas[oficinaId] > 0){
-            vagas[oficinaId] --;
-            document.getElementById('vagas' + oficinaId).innerText = vagas[oficinaId];
-
-            if(vagas[oficinaId] === 0){
-                document.getElementById('btn' + oficinaId).disable = true;
-                document.getElementById('btn' + oficinaId).innerText = 'Vagas Esgostadas'
-            }
-            return true
-        }else{
-            alert('Não há mais vagas disponíveis para esta oficina.')
-            return false
-        }
-    }
-
 
     function expandImage(imageElement) {
         // Seleciona todas as imagens com a classe 'image'
@@ -367,7 +338,7 @@
 
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
-    import { getFirestore, collection, query, where, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
+    import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc, increment } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js';
 
     // Configuração do Firebase
     const firebaseConfig = {
@@ -384,9 +355,10 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-
-
-
+    async function getInscritos(oficinaId) {
+        const oficinaDoc = await getDocs(query(collection(db, 'oficinas'), where('oficina', '==', oficinaId)));
+        return oficinaDoc.size; // Retorna o número de inscritos na oficina
+    }
 
 
     // Função para salvar dados no Firestore
@@ -399,23 +371,25 @@
         const oficina = document.getElementById('oficinaId').value;
         const church = document.getElementById('church').value;
 
-        if (!inscrever(oficina)) {
-            alert('Não há vagas disponíveis para esta oficina.');
-            return; // Interrompe a execução se não houver vagas
-        }
-
         try {
+            // Verifica quantos inscritos já existem para a oficina
+            const inscritos = await getInscritos(oficina);
+
+            if (inscritos >= 15) {
+                alert('Esta oficina já atingiu o limite máximo de 15 participantes.');
+                return;
+            }
+
             // Verifica se o email já existe na coleção 'inscricoes'
             const q = query(collection(db, 'oficinas'), where('email', '==', email));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
-                // Se a consulta retornar algum documento, o email já está registrado
                 alert('Este e-mail já foi utilizado para uma inscrição.');
                 return;
             }
 
-            // Se o email não existir, adiciona o novo documento
+            // Adiciona o novo inscrito no Firestore
             await addDoc(collection(db, 'oficinas'), {
                 name: name.toUpperCase(),
                 email: email,
@@ -424,15 +398,42 @@
                 church: church
             });
 
+            // Atualiza o número de inscritos no Firestore para a oficina
+            const oficinaDocRef = doc(db, 'oficinas', oficina);
+            await updateDoc(oficinaDocRef, {
+                inscritos: increment(1)
+            });
+
             alert('Inscrição enviada com sucesso!');
             document.getElementById('registrationForm').reset();
-            // Redireciona para o grupo no WhatsApp
 
         } catch (error) {
             console.error('Erro ao enviar inscrição: ', error);
             alert('Erro ao enviar inscrição. Tente novamente.');
         }
     });
+
+    async function updateVagasDisponiveis(oficinaId, elementId) {
+        const inscritos = await getInscritos(oficinaId);
+        const vagasRestantes = 15 - inscritos;
+        document.getElementById(elementId).textContent = `Vagas disponíveis: ${vagasRestantes}`;
+    }
+
+
+    // Exemplo de chamada para atualizar a contagem de vagas
+    // Atualiza a contagem de vagas para cada oficina
+    updateVagasDisponiveis('1', 'vagas-oficina-1');
+    updateVagasDisponiveis('2', 'vagas-oficina-2');
+    updateVagasDisponiveis('3', 'vagas-oficina-3');
+    updateVagasDisponiveis('4', 'vagas-oficina-4');
+    updateVagasDisponiveis('5', 'vagas-oficina-5');
+    updateVagasDisponiveis('6', 'vagas-oficina-6');
+    updateVagasDisponiveis('7', 'vagas-oficina-7');
+
+
+
+
+
 </script>
 </body>
 </html>
