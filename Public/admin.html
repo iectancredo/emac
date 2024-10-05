@@ -144,30 +144,24 @@
         const input = document.getElementById('search-input').value.toUpperCase(); // Converte a entrada para caixa alta
         console.log('Pesquisa:', input); // Adicione este log para verificar o valor de input
         let inscritosRef = collection(db, 'inscricoes');
-        let oficinas = collection(db, 'oficinas')
-
 
         if (input) {
             inscritosRef = query(inscritosRef,
                 where('name', '>=', input),
-                where('name', '<=', input + '\uf8ff'),
-                orderBy('dataDeInscricao') // Ordena pela data de criação
+                where('name', '<=', input + '\uf8ff')
             );
         } else {
-            inscritosRef = query(inscritosRef, orderBy('dataDeInscricao')); // Ordena pela data de criação se não houver filtro
+            inscritosRef = query(inscritosRef); // Não filtra pela pesquisa se estiver vazio
         }
 
         const inscritosSnapshot = await getDocs(inscritosRef);
-        const oficinasSnapshot = await  getDocs(oficinas)
         console.log('Snapshot:', inscritosSnapshot.docs);
-
-        // Adicione este log para verificar o resultado da consulta
 
         const listaInscritos = document.getElementById('lista-inscritos');
         const total = document.getElementById('total_inscritos');
         const totalPresentes = document.getElementById('total_presentes');
         const totalPagamentos = document.getElementById('total_pagamentos');
-        const totalInstallments = document.getElementById('total_installment')
+        const totalInstallments = document.getElementById('total_installment');
 
         listaInscritos.innerHTML = '';
         let count = 0;
@@ -175,40 +169,58 @@
         let countPagamentos = 0;
         let countInstallment = 0;
 
+        // Separar documentos com e sem data
+        const inscritosComData = [];
+        const inscritosSemData = [];
+
         inscritosSnapshot.forEach((doc) => {
             const inscrito = doc.data();
-            console.log('Inscrito:', inscrito); // Adicione este log para verificar os dados do inscrito
-            if (inscrito.name && inscrito.name.includes(input)) { // A comparação é feita agora com a entrada já em caixa alta
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${inscrito.name || 'N/A'}</td>
-                <td>${inscrito.age || 'N/A'}</td>
-                <td>${inscrito.church || 'N/A'}</td>
-                <td>${inscrito.shepherd || 'N/A'}</td>
-                <td>${inscrito.phone || 'N/A'}</td>
-                <td>${inscrito.paymentMethod || 'N/A'}</td>
-                <td style="background-color: lightcoral"><input type="checkbox" ${inscrito.installment ? 'checked' : ''} onchange="updateInstallment('${doc.id}', this.checked)"></td>
-                <td style="background-color: lightgreen"><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${doc.id}', this.checked)"></td>
-                <td style="background-color: lightskyblue"><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${doc.id}', this.checked)"></td>
-                <td><button class="btn btn-danger" onclick="removerins('${doc.id}')">Remover</button></td>`;
-                listaInscritos.appendChild(row);
-                count++;
-
-                if(inscrito.presence){
-                    countPresentes++
-                }
-                if(inscrito.paymentStatus){
-                    countPagamentos++
-                }
-                if(inscrito.installment){
-                    countInstallment++
-                }
+            if (inscrito.dataDeInscricao) {
+                inscritosComData.push({ id: doc.id, ...inscrito });
+            } else {
+                inscritosSemData.push({ id: doc.id, ...inscrito });
             }
         });
+
+        // Ordenar os que têm dataDeInscricao em ordem decrescente
+        inscritosComData.sort((a, b) => b.dataDeInscricao.seconds - a.dataDeInscricao.seconds);
+
+        // Concatenar os dois arrays
+        const todosInscritos = [...inscritosComData, ...inscritosSemData];
+
+        todosInscritos.forEach((inscrito) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${inscrito.name || 'N/A'}</td>
+            <td>${inscrito.age || 'N/A'}</td>
+            <td>${inscrito.church || 'N/A'}</td>
+            <td>${inscrito.shepherd || 'N/A'}</td>
+            <td>${inscrito.phone || 'N/A'}</td>
+            <td>${inscrito.paymentMethod || 'N/A'}</td>
+            <td style="background-color: lightcoral"><input type="checkbox" ${inscrito.installment ? 'checked' : ''} onchange="updateInstallment('${inscrito.id}', this.checked)"></td>
+            <td style="background-color: lightgreen"><input type="checkbox" ${inscrito.paymentStatus ? 'checked' : ''} onchange="updatePayment('${inscrito.id}', this.checked)"></td>
+            <td style="background-color: lightskyblue"><input type="checkbox" ${inscrito.presence ? 'checked' : ''} onchange="updatePresence('${inscrito.id}', this.checked)"></td>
+            <td><button class="btn btn-danger" onclick="removerins('${inscrito.id}')">Remover</button></td>`;
+            listaInscritos.appendChild(row);
+            count++;
+
+            if (inscrito.presence) {
+                countPresentes++;
+            }
+            if (inscrito.paymentStatus) {
+                countPagamentos++;
+            }
+            if (inscrito.installment) {
+                countInstallment++;
+            }
+        });
+
         total.textContent = count;
         totalPresentes.textContent = countPresentes;
         totalPagamentos.textContent = countPagamentos;
-        totalInstallments.textContent = countInstallment
+        totalInstallments.textContent = countInstallment;
     }
+
+
 
     window.removerins = async function(id){
         if(confirm('Tem certeza que deseja remover este inscrito?')){
