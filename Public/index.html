@@ -110,6 +110,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      animation: piscar 1s infinite;
     }
 
     .close-btn {
@@ -237,8 +238,8 @@
                 <p>Envie o comprovante para o nosso Whastapp</p>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
-                <label class="form-check-label" for="installments">Cartão de Crédito</label>
+                <input class="form-check-input" style="display: none" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
+                <label class="form-check-label" for="installments" style="display: none">Cartão de Crédito</label>
               </div>
               <div class="payment-info" id="installmentsInfo" style="display: none">
                 <p style="display: none">O parcelamento é feito em 2 vezes no Pix. O valor total será dividido igualmente em parcelas mensais, que deverão ser pagas, respectivamente, nos dias 10 de setembro e 10 de outubro. Envie o comprovante pelo WhatsApp com seu nome completo.</p>
