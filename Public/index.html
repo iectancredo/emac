@@ -60,6 +60,12 @@
       font-family: 'Poppins';
     }
 
+    .aviso {
+      word-wrap: break-word; /* Faz com que o texto quebre para a próxima linha */
+      white-space: normal;   /* Garante que o texto se ajuste ao espaço disponível */
+    }
+
+
     .container-fluid{
       padding: 20px;
     }
@@ -177,7 +183,7 @@
                 <label class="form-check-label" for="installments">Dinheiro</label>
               </div>
               <div class="payment-info" id="moneyInfo" style="display: none">
-                <p>Em caso de pagamento na chegada ao evento, haverá uma taxa adicional de R$ 10,00, totalizando o valor de R$ 120,00.</p>
+                <p style="display: none">Em caso de pagamento na chegada ao evento, haverá uma taxa adicional de R$ 10,00, totalizando o valor de R$ 120,00.</p>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="paymentMethod" id="pix" value="pix" required>
@@ -188,7 +194,7 @@
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
-                <label class="form-check-label" for="installments">Píx parcelado</label>
+                <label class="form-check-label" for="installments">Cartão de Crédito</label>
               </div>
               <div class="payment-info" id="installmentsInfo" style="display: none">
                 <p style="display: none">O parcelamento é feito em 2 vezes no Pix. O valor total será dividido igualmente em parcelas mensais, que deverão ser pagas, respectivamente, nos dias 10 de setembro e 10 de outubro. Envie o comprovante pelo WhatsApp com seu nome completo.</p>
@@ -210,9 +216,9 @@
             </a>
 
             <!-- Botão flutuante de relógio -->
-            <div class="floating-clock" style="display: none">
-              <img src="img/clock.png" style="width: 60px;">
-              <p style="display: inline; vertical-align: middle;">Inscrições até 15 de Outubro de 2024</p>
+            <div class="floating-clock aviso" >
+              <img src="img/clock.png" style="width: 40px;">
+              <p  style="display: inline; vertical-align: middle;">As inscrições realizadas no momento do check-in do evento terão o valor de R$ 120,00</p>
             </div>
 
 
@@ -225,7 +231,7 @@
     </div>
   </div>
 </div>
-
+</div>
 
 <!-- Bootstrap JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
