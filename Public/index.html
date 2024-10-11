@@ -238,12 +238,14 @@
                 <p>Envie o comprovante para o nosso Whastapp</p>
               </div>
               <div class="form-check">
-                <input class="form-check-input" style="display: none" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
-                <label class="form-check-label" for="installments" style="display: none">Cartão de Crédito</label>
+                <input class="form-check-input" type="radio" name="paymentMethod" id="installments" value="parcelamento" required>
+                <label class="form-check-label" for="installments" >Cartão de Crédito</label>
               </div>
               <div class="payment-info" id="installmentsInfo" style="display: none">
-                <p style="display: none">O parcelamento é feito em 2 vezes no Pix. O valor total será dividido igualmente em parcelas mensais, que deverão ser pagas, respectivamente, nos dias 10 de setembro e 10 de outubro. Envie o comprovante pelo WhatsApp com seu nome completo.</p>
+                <iframe src="https://www.mercadopago.com.br/checkout/v1/payment/redirect/c99e0610-6aa9-4900-86f7-58af0d91a81b/payment-option-form-v2/?source=link&preference-id=621866461-dfa908f3-e5cd-4476-8a3e-d2fb8b078ea0&router-request-id=b76a3fde-5c2c-48fa-86c2-4b7ee50fdd25&p=5a4a6e66b24e6904ac3343e21a3612d6"
+                        width="100%" height="500px" frameborder="0" allowfullscreen></iframe>
               </div>
+
             </div>
             <div id="pixInfo">
               <img id="pixQrCode" src="img/qrcode.jpeg" alt="QR Code Pix">
