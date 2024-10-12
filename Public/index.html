@@ -365,10 +365,14 @@
 
       alert('Inscrição enviada com sucesso!');
       document.getElementById('registrationForm').reset();
-
-      // Redireciona para o grupo no WhatsApp
-      const whatsappGroupLink = "https://chat.whatsapp.com/LqOvozPRdOJ5R0PLbmrnfm"; // Substitua pelo link do grupo
-      window.location.href = whatsappGroupLink;
+// Redireciona para o grupo no WhatsApp ou para a página de pagamento se cartão de crédito foi selecionado
+      if (paymentMethod === 'parcelamento') {
+        const creditCardPaymentLink = "https://mpago.la/2mBxVKa"; // Substitua pelo link desejado
+        window.location.href = creditCardPaymentLink;
+      } else {
+        const whatsappGroupLink = "https://chat.whatsapp.com/LqOvozPRdOJ5R0PLbmrnfm"; // Substitua pelo link do grupo
+        window.location.href = whatsappGroupLink;
+      }
     } catch (error) {
       console.error('Erro ao enviar inscrição: ', error);
       alert('Erro ao enviar inscrição. Tente novamente.');
