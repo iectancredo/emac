@@ -365,7 +365,7 @@
       alert('Inscrição enviada com sucesso (AGUARDE)!');
       document.getElementById('registrationForm').reset();
 // Redireciona para o grupo no WhatsApp ou para a página de pagamento se cartão de crédito foi selecionado
-      if (paymentMethod === 'parcelamento') {
+      if (paymentMethod === 'Cartão') {
         const creditCardPaymentLink = "https://mpago.la/2mBxVKa"; // Substitua pelo link desejado
         window.location.href = creditCardPaymentLink;
       } else {
