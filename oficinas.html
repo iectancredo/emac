@@ -375,8 +375,8 @@
             // Verifica quantos inscritos já existem para a oficina
             const inscritos = await getInscritos(oficina);
 
-            if (inscritos >= 15) {
-                alert('Esta oficina já atingiu o limite máximo de 15 participantes.');
+            if (inscritos >= 20) {
+                alert('Esta oficina já atingiu o limite máximo de 20 participantes.');
                 return;
             }
 
@@ -413,7 +413,7 @@
 
     async function updateVagasDisponiveis(oficinaId, elementId) {
         const inscritos = await getInscritos(oficinaId);
-        const vagasRestantes = 15 - inscritos;
+        const vagasRestantes = 20 - inscritos;
         document.getElementById(elementId).textContent = `Vagas disponíveis: ${vagasRestantes}`;
     }
 
